@@ -7,14 +7,20 @@ import {
     useLocation
 } from "react-router-dom";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import {Avatar, Link, Typography} from "@mui/material";
 
 import Home from "./pages/Home";
 import SplitWorkouts from "./pages/SplitWorkouts";
 import WorkoutPage from "./pages/WorkoutPage";
 import ExercisePage from "./pages/ExercisePage";
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 import styles from './styles.module.css';
-import {Link, Typography} from "@mui/material";
+
 
 
 const routes = {
@@ -44,7 +50,7 @@ function BreadcrumbsComponent() {
     const pathnames = location.pathname.split('/').filter((x) => x);
 
     return (
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs} >
             <LinkRouter underline="hover" color="inherit" to="/">
                 Home
             </LinkRouter>
@@ -73,6 +79,7 @@ function App() {
           <div className={styles.app}>
               <nav className={styles.navigation}>
                   <BreadcrumbsComponent />
+                  <Avatar alt="Alex Chernetsky" src="/static/images/avatar/1.jpg" />
               </nav>
 
               <Routes>

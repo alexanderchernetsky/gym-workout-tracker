@@ -23,7 +23,6 @@ const ExercisePage = () => {
 
     return (
         <div className={styles.pageWrapper}>
-            <div className={styles.exercise}>Exercise</div>
             <div className={styles.boxWrapper}>
                 <Box
                     sx={{
