@@ -1,0 +1,62 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+}
+
+.notFound {
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.exercise {
+    text-transform: uppercase;
+    padding: 5px 20px;
+    color: darkgray;
+    font-size: 14px;
+}
+
+.boxWrapper {
+    width: 100%;
+}
+
+.paper {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.textWrapper {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.imageWrapper {
+    height: 100%;
+    width: 50%;
+}
+
+.image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.exerciseName {
+    text-transform: capitalize;
+    padding: 5px 20px;
+    color: #1A2027;
+    font-weight: bold;
+}
+
+.muscleType {
+    text-transform: capitalize;
+    padding: 5px 20px;
+    color: darkgray;
+}

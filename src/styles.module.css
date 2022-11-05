@@ -1,0 +1,13 @@
+.navigation {
+    padding: 10px 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: #00000099;
+}
+
+.app {
+    height: 100vh;
+    background-color: #E7EBF0;
+}

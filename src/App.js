@@ -1,24 +1,88 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+    Link as RouterLink,
+    Route,
+    BrowserRouter,
+    Routes,
+    useLocation
+} from "react-router-dom";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+
+import Home from "./pages/Home";
+import SplitWorkouts from "./pages/SplitWorkouts";
+import WorkoutPage from "./pages/WorkoutPage";
+import ExercisePage from "./pages/ExercisePage";
+
+import styles from './styles.module.css';
+import {Link, Typography} from "@mui/material";
+
+
+const routes = {
+    HOME: '/',
+    SPLIT_WORKOUTS_LIST: '/split-workout',
+    SPLIT_WORKOUT: '/split-workout/:id',
+    EXERCISES_LIST: `/exercise`,
+    EXERCISE: '/exercise/:id',
+}
+
+function LinkRouter(props) {
+    return <Link {...props} component={RouterLink} />;
+}
+
+// todo: get rid of hardcode, use regular expressions ?
+const getBreadcrumbNameMap = (id) => ({
+    [routes.SPLIT_WORKOUTS_LIST]: 'Split workouts',
+    [`${routes.SPLIT_WORKOUTS_LIST}/1`]: 'Workout',
+    [`${routes.SPLIT_WORKOUTS_LIST}/2`]: 'Workout',
+    [`${routes.SPLIT_WORKOUTS_LIST}/3`]: 'Workout',
+    [`${routes.EXERCISES_LIST}`]: 'Exercises',
+    [`${routes.EXERCISES_LIST}/1`]: 'Exercise',
+})
+
+function BreadcrumbsComponent() {
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter((x) => x);
+
+    return (
+        <Breadcrumbs aria-label="breadcrumb">
+            <LinkRouter underline="hover" color="inherit" to="/">
+                Home
+            </LinkRouter>
+            {pathnames.map((value, index) => {
+                const last = index === pathnames.length - 1;
+                const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+
+                return last ? (
+                    <Typography color="text.primary" key={to}>
+                        {getBreadcrumbNameMap()[to]}
+                    </Typography>
+                ) : (
+                    <LinkRouter underline="hover" color="inherit" to={to} key={to}>
+                        {getBreadcrumbNameMap()[to]}
+                    </LinkRouter>
+                );
+            })}
+        </Breadcrumbs>
+    );
+}
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+          <div className={styles.app}>
+              <nav className={styles.navigation}>
+                  <BreadcrumbsComponent />
+              </nav>
+
+              <Routes>
+                  <Route path={routes.HOME} element={<Home />} />
+                  <Route path={routes.SPLIT_WORKOUTS_LIST} element={<SplitWorkouts />} />
+                  <Route path={routes.SPLIT_WORKOUT} element={<WorkoutPage />} />
+                  <Route path={routes.EXERCISE} element={<ExercisePage />} />
+              </Routes>
+          </div>
+      </BrowserRouter>
   );
 }
 
