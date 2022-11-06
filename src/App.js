@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import SplitWorkouts from "./pages/SplitWorkouts";
 import WorkoutPage from "./pages/WorkoutPage";
 import ExercisePage from "./pages/ExercisePage";
+import Exercises from "./pages/Exercises";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -20,6 +21,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import styles from './styles.module.css';
+
 
 
 
@@ -86,6 +88,7 @@ function App() {
                   <Route path={routes.HOME} element={<Home />} />
                   <Route path={routes.SPLIT_WORKOUTS_LIST} element={<SplitWorkouts />} />
                   <Route path={routes.SPLIT_WORKOUT} element={<WorkoutPage />} />
+                  <Route path={routes.EXERCISES_LIST} element={<Exercises />} />
                   <Route path={routes.EXERCISE} element={<ExercisePage />} />
               </Routes>
           </div>
