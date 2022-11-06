@@ -34,7 +34,7 @@ const Home = () => {
                 }}
             >
                 {workoutTypes.map(type => (
-                    <Link to={type.link} style={{textDecoration: 'none'}}>
+                    <Link to={type.link} style={{textDecoration: 'none'}} key={type.id}>
                         <Paper elevation={3} key={type.id} className={styles.paper}>
                             <div className={styles.name}>{type.name}</div>
                         </Paper>
