@@ -22,6 +22,7 @@ const Home = () => {
     return (
         <div className={styles.homePageWrapper}>
             <h2>Workouts</h2>
+            {/* todo: remove inline styles */}
             <Box
                 sx={{
                     display: 'flex',
