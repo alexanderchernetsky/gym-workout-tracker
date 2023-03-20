@@ -5,9 +5,14 @@
   align-items: center;
 }
 
-.pageName {
-  padding: 0 20px;
-  text-align: center;
+.addIcon {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
+
+.indicatorName {
+  text-transform: capitalize;
 }
 
 .imageWrapper {
