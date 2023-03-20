@@ -20,12 +20,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-import Home from "./pages/Home";
-import SplitWorkouts from "./pages/SplitWorkouts";
-import WorkoutPage from "./pages/WorkoutPage";
-import ExercisePage from "./pages/ExercisePage";
-import Exercises from "./pages/Exercises";
-import ProgressPage from './pages/ProgressPage';
+import Home from "./features/Home";
+import SplitWorkouts from "./features/SplitWorkouts";
+import WorkoutPage from "./features/WorkoutPage";
+import ExercisePage from "./features/ExercisePage";
+import Exercises from "./features/Exercises";
+import ProgressPage from './features/progress';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

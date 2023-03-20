@@ -6,13 +6,17 @@
 }
 
 .addIcon {
-  position: fixed;
+  position: fixed !important;
   bottom: 50px;
   right: 50px;
 }
 
 .indicatorName {
   text-transform: capitalize;
+}
+
+.indicator {
+  display: block;
 }
 
 .imageWrapper {
