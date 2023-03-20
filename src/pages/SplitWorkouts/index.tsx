@@ -13,6 +13,7 @@ const SplitWorkouts = () => {
         <div className={styles.pageWrapper}>
             <h2>Split workouts</h2>
             <div>
+                {/* todo: remove inline styles */}
                 <Box
                     sx={{
                         display: 'flex',

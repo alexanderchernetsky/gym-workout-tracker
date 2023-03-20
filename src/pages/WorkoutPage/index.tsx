@@ -1,12 +1,13 @@
 import React from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {Button, List, ListItem, ListItemText} from "@mui/material";
 import uuid from 'react-uuid';
+import {Button, List, ListItem, ListItemText} from "@mui/material";
 
 import {workouts} from "../../data/workouts";
 
 import styles from './styles.module.css';
 
+// todo: remove inline styles
 const style = {
     width: '100%',
     maxWidth: 360,
@@ -33,7 +34,7 @@ const SplitWorkouts = () => {
             <h2 className={styles.pageName}>{workout.name}</h2>
             <h4 className={styles.muscles}>{workout.muscleTypes}</h4>
             <List sx={style} component="nav" aria-label="mailbox folders">
-                {(workout.exercises || []).map(exercise => (
+                {workout.exercises.map(exercise => (
                     <Link to={`/exercise/${exercise.id}`} style={{textDecoration: 'none'}} key={exercise.id}>
                         <ListItem key={exercise.id} button divider>
                             <ListItemText primary={exercise.name} className={styles.exerciseName}  />

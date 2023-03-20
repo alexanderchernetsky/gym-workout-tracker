@@ -24,28 +24,29 @@ import '@fontsource/roboto/700.css';
 import styles from './styles.module.css';
 
 
-const routes = {
-    HOME: '/',
-    SPLIT_WORKOUTS_LIST: '/split-workout',
-    SPLIT_WORKOUT: '/split-workout/:id',
-    EXERCISES_LIST: `/exercise`,
-    EXERCISE: '/exercise/:id',
-    PROGRESS: '/progress'
+export enum AppRoutes {
+    HOME = '/',
+    SPLIT_WORKOUTS_LIST = '/split-workout',
+    FULL_BODY_WORKOUTS_LIST = '/full-body-workout',
+    SPLIT_WORKOUT = '/split-workout/:id',
+    EXERCISES_LIST = `/exercise`,
+    EXERCISE = '/exercise/:id',
+    PROGRESS = '/progress'
 }
 
-function LinkRouter(props) {
+function LinkRouter(props: any) {
     return <Link {...props} component={RouterLink} />;
 }
 
 // todo: get rid of hardcode, use regular expressions ?
-const getBreadcrumbNameMap = (id) => ({
-    [routes.SPLIT_WORKOUTS_LIST]: 'Split workouts',
-    [`${routes.SPLIT_WORKOUTS_LIST}/1`]: 'Workout',
-    [`${routes.SPLIT_WORKOUTS_LIST}/2`]: 'Workout',
-    [`${routes.SPLIT_WORKOUTS_LIST}/3`]: 'Workout',
-    [`${routes.EXERCISES_LIST}`]: 'Exercises',
-    [`${routes.EXERCISES_LIST}/1`]: 'Exercise',
-    [`${routes.PROGRESS}`]: 'Progress',
+const getBreadcrumbNameMap = () => ({
+    [AppRoutes.SPLIT_WORKOUTS_LIST]: 'Split workouts',
+    [`${AppRoutes.SPLIT_WORKOUTS_LIST}/1`]: 'Workout',
+    [`${AppRoutes.SPLIT_WORKOUTS_LIST}/2`]: 'Workout',
+    [`${AppRoutes.SPLIT_WORKOUTS_LIST}/3`]: 'Workout',
+    [`${AppRoutes.EXERCISES_LIST}`]: 'Exercises',
+    [`${AppRoutes.EXERCISES_LIST}/1`]: 'Exercise',
+    [`${AppRoutes.PROGRESS}`]: 'Progress',
 })
 
 function BreadcrumbsComponent() {
@@ -86,12 +87,12 @@ function App() {
               </nav>
 
               <Routes>
-                  <Route path={routes.HOME} element={<Home />} />
-                  <Route path={routes.SPLIT_WORKOUTS_LIST} element={<SplitWorkouts />} />
-                  <Route path={routes.SPLIT_WORKOUT} element={<WorkoutPage />} />
-                  <Route path={routes.EXERCISES_LIST} element={<Exercises />} />
-                  <Route path={routes.EXERCISE} element={<ExercisePage />} />
-                  <Route path={routes.PROGRESS} element={<ProgressPage />} />
+                  <Route path={AppRoutes.HOME} element={<Home />} />
+                  <Route path={AppRoutes.SPLIT_WORKOUTS_LIST} element={<SplitWorkouts />} />
+                  <Route path={AppRoutes.SPLIT_WORKOUT} element={<WorkoutPage />} />
+                  <Route path={AppRoutes.EXERCISES_LIST} element={<Exercises />} />
+                  <Route path={AppRoutes.EXERCISE} element={<ExercisePage />} />
+                  <Route path={AppRoutes.PROGRESS} element={<ProgressPage />} />
               </Routes>
           </div>
       </BrowserRouter>

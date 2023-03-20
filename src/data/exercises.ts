@@ -1,4 +1,11 @@
-export const exercises = [
+export interface Exercise {
+    id: number,
+    name: string,
+    muscleTypes: string,
+    image: string,
+}
+
+export const exercises: Exercise[] = [
     {
         id: 1,
         name: 'pull ups',

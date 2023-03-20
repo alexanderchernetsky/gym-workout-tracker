@@ -1,11 +1,19 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import {Link} from "react-router-dom";
+
 
 import styles from './styles.module.css';
 
-const workoutTypes = [
+
+interface WorkoutType {
+    id: number,
+    name: string,
+    link: string
+}
+
+const workoutTypes: WorkoutType[] = [
     {
         id: 1,
         name: 'Split',

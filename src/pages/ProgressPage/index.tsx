@@ -9,7 +9,16 @@ import photo from '../../images/physical-shape-19-03-23.jpg';
 
 import styles from "./styles.module.scss";
 
-const progressItems = [{
+type ProgressIndicator = [string, number];
+
+interface ProgressItem {
+    date: string,
+    weight: number,
+    indicators: ProgressIndicator[],
+    diet: string
+}
+
+const progressItems: ProgressItem[] = [{
     date: '19/03/2023',
     weight: 70,
     indicators: [
@@ -32,7 +41,6 @@ const progressItems = [{
 const ProgressPage = () => {
     return (
         <div className={styles.pageWrapper}>
-            <h2 className={styles.pageName}>Progress</h2>
             {progressItems.map(item => {
                return (
                    <Card sx={{ minWidth: 275, width: '90%' }}>
