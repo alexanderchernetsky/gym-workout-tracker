@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import progressReducer from './features/progress/progressSlice';
+import loginReducer from './features/login/loginSlice';
 
 const store = configureStore({
     reducer: {
-        progress: progressReducer
+        login: loginReducer,
+        progress: progressReducer,
     },
 });
 

@@ -26,6 +26,8 @@ import WorkoutPage from "./features/WorkoutPage";
 import ExercisePage from "./features/ExercisePage";
 import Exercises from "./features/Exercises";
 import ProgressPage from './features/progress';
+import CreateProgressItemPage from "./features/progress/CreateProgressItemPage";
+import LoginForm from "./features/login";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -33,10 +35,15 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import styles from './styles.module.css';
+import {useSelector} from "react-redux";
+import {RootState} from "./store";
+
+
 
 
 export enum AppRoutes {
     HOME = '/',
+    LOGIN = '/login',
     PROGRESS_PAGE = '/progress',
     CREATE_PROGRESS_ITEM_PAGE = '/progress/create',
     DIET_PAGE = '/diet',
@@ -216,20 +223,48 @@ function ResponsiveAppBar() {
     );
 }
 
+interface IPageWithResponsiveAppBarProps {
+    children: React.ReactNode;
+}
+
+// todo: find a better way to show ResponsiveAppBar for all routes except /login
+export const PageWithResponsiveAppBar: React.FC<IPageWithResponsiveAppBarProps> = ({children}) => {
+    return (
+        <React.Fragment>
+            <ResponsiveAppBar />
+            {children}
+        </React.Fragment>
+    )
+}
+
+interface IRequireAuthProps {
+    children: React.ReactNode
+}
+
+const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
+    const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
+
+    return (
+        <React.Fragment>
+            {isLoggedIn ? (children) : (<LoginForm />)}
+        </React.Fragment>
+    )
+}
 
 function App() {
   return (
       <BrowserRouter>
           <div className={styles.app}>
-              <ResponsiveAppBar />
-
               <Routes>
-                  <Route path={AppRoutes.HOME} element={<Home />} />
-                  <Route path={AppRoutes.PROGRESS_PAGE} element={<ProgressPage />} />
-                  <Route path={AppRoutes.SPLIT_WORKOUTS_LIST} element={<SplitWorkouts />} />
-                  <Route path={AppRoutes.SPLIT_WORKOUT} element={<WorkoutPage />} />
-                  <Route path={AppRoutes.EXERCISES_LIST} element={<Exercises />} />
-                  <Route path={AppRoutes.EXERCISE} element={<ExercisePage />} />
+                      <Route path={AppRoutes.LOGIN} element={<LoginForm />} />
+                      <Route path={AppRoutes.HOME} element={<RequireAuth><Home /></RequireAuth>} />
+                      <Route path={AppRoutes.PROGRESS_PAGE} element={<RequireAuth><ProgressPage /></RequireAuth>} />
+                      <Route path={AppRoutes.CREATE_PROGRESS_ITEM_PAGE} element={<RequireAuth><CreateProgressItemPage /></RequireAuth>} />
+                      <Route path={AppRoutes.SPLIT_WORKOUTS_LIST} element={<RequireAuth><SplitWorkouts /></RequireAuth>} />
+                      <Route path={AppRoutes.SPLIT_WORKOUT} element={<RequireAuth><WorkoutPage /></RequireAuth>} />
+                      <Route path={AppRoutes.EXERCISES_LIST} element={<RequireAuth><Exercises /></RequireAuth>} />
+                      <Route path={AppRoutes.EXERCISE} element={<RequireAuth><ExercisePage /></RequireAuth>} />
+                      {/* todo: add 404 page */}
               </Routes>
           </div>
       </BrowserRouter>

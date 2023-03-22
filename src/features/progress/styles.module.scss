@@ -11,21 +11,33 @@
   right: 50px;
 }
 
+.indicator {
+  padding-right: 5px;
+  overflow-wrap: break-word;
+}
+
 .indicatorName {
   text-transform: capitalize;
 }
 
-.indicator {
-  display: block;
+.indicatorValue {
+  font-weight: 500;
 }
 
 .imageWrapper {
   width: 100%;
-  height: 350px;
+  height: 400px;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
 }

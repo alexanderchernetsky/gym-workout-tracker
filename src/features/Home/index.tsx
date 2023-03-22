@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 
 
 import styles from './styles.module.css';
+import {PageWithResponsiveAppBar} from "../../App";
 
 
 interface WorkoutType {
@@ -28,29 +29,31 @@ const workoutTypes: WorkoutType[] = [
 
 const Home = () => {
     return (
-        <div className={styles.homePageWrapper}>
-            <h2>Workouts</h2>
-            {/* todo: remove inline styles */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                        m: 1,
-                        width: 156,
-                        height: 128,
-                    },
-                }}
-            >
-                {workoutTypes.map(type => (
-                    <Link to={type.link} style={{textDecoration: 'none'}} key={type.id}>
-                        <Paper elevation={3} key={type.id} className={styles.paper}>
-                            <div className={styles.name}>{type.name}</div>
-                        </Paper>
-                    </Link>
-                ))}
-            </Box>
-        </div>
+        <PageWithResponsiveAppBar>
+            <div className={styles.homePageWrapper}>
+                <h2>Workouts</h2>
+                {/* todo: remove inline styles */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 156,
+                            height: 128,
+                        },
+                    }}
+                >
+                    {workoutTypes.map(type => (
+                        <Link to={type.link} style={{textDecoration: 'none'}} key={type.id}>
+                            <Paper elevation={3} key={type.id} className={styles.paper}>
+                                <div className={styles.name}>{type.name}</div>
+                            </Paper>
+                        </Link>
+                    ))}
+                </Box>
+            </div>
+        </PageWithResponsiveAppBar>
     )
 }
 

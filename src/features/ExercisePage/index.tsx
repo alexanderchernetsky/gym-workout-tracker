@@ -3,7 +3,8 @@ import {useParams} from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
-import {exercises} from "../../data/exercises";
+import {exercises} from "../../mock-data/exercises";
+import {PageWithResponsiveAppBar} from "../../App";
 
 import styles from './styles.module.css';
 
@@ -30,22 +31,23 @@ const ExercisePage = () => {
     const image = exercise.image || 'placeholder.jpeg';
 
     return (
-        <div className={styles.pageWrapper}>
-            <div className={styles.boxWrapper}>
-                <Box sx={boxStyles}>
-                    <Paper elevation={3} className={styles.paper}>
-                        <div className={styles.textWrapper}>
-                            <div className={styles.exerciseName}>{exercise.name}</div>
-                            <div className={styles.muscleType}>{exercise.muscleTypes}</div>
-                        </div>
-                       <div className={styles.imageWrapper}>
-                            <img alt={exercise.name} src={require(`../../images/${image}`)} className={styles.image} />
-                       </div>
-                    </Paper>
-                </Box>
+        <PageWithResponsiveAppBar>
+            <div className={styles.pageWrapper}>
+                <div className={styles.boxWrapper}>
+                    <Box sx={boxStyles}>
+                        <Paper elevation={3} className={styles.paper}>
+                            <div className={styles.textWrapper}>
+                                <div className={styles.exerciseName}>{exercise.name}</div>
+                                <div className={styles.muscleType}>{exercise.muscleTypes}</div>
+                            </div>
+                            <div className={styles.imageWrapper}>
+                                <img alt={exercise.name} src={require(`../../images/${image}`)} className={styles.image} />
+                            </div>
+                        </Paper>
+                    </Box>
+                </div>
             </div>
-
-        </div>
+        </PageWithResponsiveAppBar>
     )}
 
 export default ExercisePage;
