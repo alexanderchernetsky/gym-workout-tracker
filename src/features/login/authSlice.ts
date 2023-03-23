@@ -8,13 +8,13 @@ export interface IUserInfo {
     id: string;
 }
 
-interface ILoginState {
+interface IAuthState {
     isLoggedIn: boolean;
     user: IUserInfo | null;
     loadingState: LoadingStateType;
 }
 
-const initialState: ILoginState = {
+const initialState: IAuthState = {
     isLoggedIn: false,
     user: null,
     loadingState: LoadingStateType.Idle
@@ -26,7 +26,8 @@ export interface ICredentials {
 }
 
 enum LoginPageActions {
-    LOG_IN = 'LOGIN/LOG_IN'
+    LOG_IN = 'AUTH/LOG_IN',
+    LOG_OUT = 'AUTH/LOG_OUT'
 }
 
 export const loginUser = createAsyncThunk(LoginPageActions.LOG_IN, async (credentials: ICredentials) => {
@@ -35,13 +36,25 @@ export const loginUser = createAsyncThunk(LoginPageActions.LOG_IN, async (creden
     return response.user;
 });
 
-const loginSlice = createSlice({
-    name: 'login',
+const authSlice = createSlice({
+    name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logOut: state => {
+            localStorage.removeItem('user');
+
+            return {
+                ...state,
+                isLoggedIn: false,
+                user: null
+            };
+        }
+    },
     extraReducers: builder => {
         builder
-            .addCase(loginUser.fulfilled, (state: ILoginState, action: PayloadAction<IUserInfo>) => {
+            .addCase(loginUser.fulfilled, (state: IAuthState, action: PayloadAction<IUserInfo>) => {
+                localStorage.setItem('user', JSON.stringify(action.payload));
+
                 return {
                     isLoggedIn: true,
                     user: action.payload,
@@ -65,4 +78,9 @@ const loginSlice = createSlice({
     }
 });
 
-export default loginSlice.reducer;
+// Extract the action creators object
+const {actions} = authSlice;
+// Extract and export each action creator by name
+export const {logOut} = actions;
+
+export default authSlice.reducer;

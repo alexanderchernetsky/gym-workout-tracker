@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
-import {loginUser} from './loginSlice';
+import {loginUser} from './authSlice';
 import {RootState} from '../../store';
 import {LoadingStateType} from '../progress/progressSlice';
 
@@ -30,8 +30,8 @@ const passwordFieldValidationRules = {
 const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const loadingState = useSelector((state: RootState) => state.login.loadingState);
-    const user = useSelector((state: RootState) => state.login.user);
+    const loadingState = useSelector((state: RootState) => state.auth.loadingState);
+    const user = useSelector((state: RootState) => state.auth.user);
 
     const methods = useForm<LoginInputs>({
         defaultValues: {

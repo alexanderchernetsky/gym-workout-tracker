@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, BrowserRouter, Routes, useNavigate, Navigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -26,6 +26,7 @@ import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
 import LoginForm from './features/login';
 import {RootState} from './store';
 import NotFound from './pages/NotFound';
+import {logOut} from './features/login/authSlice';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -63,13 +64,14 @@ const appNavigationItems = [
     }
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -89,6 +91,10 @@ function ResponsiveAppBar() {
     const handleNavItemClick = (route: AppRoutes) => {
         navigate(route);
         setAnchorElNav(null);
+    };
+
+    const handleLogOut = () => {
+        dispatch(logOut());
     };
 
     return (
@@ -205,6 +211,9 @@ function ResponsiveAppBar() {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem key="log-out" onClick={handleLogOut}>
+                                <Typography textAlign="center">Log out</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
@@ -232,7 +241,7 @@ interface IRequireAuthProps {
 }
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
-    const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     return <React.Fragment>{isLoggedIn ? children : <LoginForm />}</React.Fragment>;
 };

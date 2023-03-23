@@ -1,5 +1,5 @@
 import {progressItems} from '../mock-data/progressItems';
-import {ICredentials, IUserInfo} from '../features/login/loginSlice';
+import {ICredentials, IUserInfo} from '../features/login/authSlice';
 
 // todo: replace with real API calls using axios, add error handling
 const api = {
