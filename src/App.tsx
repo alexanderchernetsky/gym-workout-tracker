@@ -1,5 +1,6 @@
 import React from 'react';
-import {Route, BrowserRouter, Routes, useNavigate} from 'react-router-dom';
+import {Route, BrowserRouter, Routes, useNavigate, Navigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -23,6 +24,8 @@ import Exercises from './features/Exercises';
 import ProgressPage from './features/progress';
 import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
 import LoginForm from './features/login';
+import {RootState} from './store';
+import NotFound from './pages/NotFound';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -30,8 +33,6 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import styles from './styles.module.css';
-import {useSelector} from 'react-redux';
-import {RootState} from './store';
 
 export enum AppRoutes {
     HOME = '/',
@@ -43,7 +44,8 @@ export enum AppRoutes {
     FULL_BODY_WORKOUTS_LIST = '/full-body-workout',
     SPLIT_WORKOUT = '/split-workout/:id',
     EXERCISES_LIST = `/exercise`,
-    EXERCISE = '/exercise/:id'
+    EXERCISE = '/exercise/:id',
+    NOT_FOUND = '/not-found'
 }
 
 const appNavigationItems = [
@@ -297,7 +299,8 @@ function App() {
                             </RequireAuth>
                         }
                     />
-                    {/* todo: add 404 page */}
+                    <Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
+                    <Route path="*" element={<Navigate to={AppRoutes.NOT_FOUND} />} />
                 </Routes>
             </div>
         </BrowserRouter>
