@@ -1,18 +1,17 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import {Chip, List, ListItem, ListItemText} from "@mui/material";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {Chip, List, ListItem, ListItemText} from '@mui/material';
 
-import {exercises} from "../../mock-data/exercises";
-import {PageWithResponsiveAppBar} from "../../App";
+import {exercises} from '../../mock-data/exercises';
+import {PageWithResponsiveAppBar} from '../../App';
 
-import styles from "./styles.module.css";
-
+import styles from './styles.module.css';
 
 // todo: remove inline styles
 const style = {
     width: '100%',
     maxWidth: 360,
-    bgcolor: 'background.paper',
+    bgcolor: 'background.paper'
 };
 
 const Exercises = () => {
@@ -24,7 +23,7 @@ const Exercises = () => {
                     {exercises.map(exercise => (
                         <Link to={`/exercise/${exercise.id}`} style={{textDecoration: 'none'}} key={exercise.id}>
                             <ListItem key={exercise.id} button divider>
-                                <ListItemText primary={exercise.name} className={styles.exerciseName}  />
+                                <ListItemText primary={exercise.name} className={styles.exerciseName} />
                                 <Chip label={exercise.muscleTypes} variant="outlined" />
                             </ListItem>
                         </Link>
@@ -32,7 +31,7 @@ const Exercises = () => {
                 </List>
             </div>
         </PageWithResponsiveAppBar>
-    )
-}
+    );
+};
 
 export default Exercises;

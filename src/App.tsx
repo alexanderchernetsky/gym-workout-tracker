@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    Route,
-    BrowserRouter,
-    Routes,
-    useNavigate
-} from "react-router-dom";
+import {Route, BrowserRouter, Routes, useNavigate} from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,14 +15,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-import Home from "./features/Home";
-import SplitWorkouts from "./features/SplitWorkouts";
-import WorkoutPage from "./features/WorkoutPage";
-import ExercisePage from "./features/ExercisePage";
-import Exercises from "./features/Exercises";
+import Home from './features/Home';
+import SplitWorkouts from './features/SplitWorkouts';
+import WorkoutPage from './features/WorkoutPage';
+import ExercisePage from './features/ExercisePage';
+import Exercises from './features/Exercises';
 import ProgressPage from './features/progress';
-import CreateProgressItemPage from "./features/progress/CreateProgressItemPage";
-import LoginForm from "./features/login";
+import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
+import LoginForm from './features/login';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -35,11 +30,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import styles from './styles.module.css';
-import {useSelector} from "react-redux";
-import {RootState} from "./store";
-
-
-
+import {useSelector} from 'react-redux';
+import {RootState} from './store';
 
 export enum AppRoutes {
     HOME = '/',
@@ -51,7 +43,7 @@ export enum AppRoutes {
     FULL_BODY_WORKOUTS_LIST = '/full-body-workout',
     SPLIT_WORKOUT = '/split-workout/:id',
     EXERCISES_LIST = `/exercise`,
-    EXERCISE = '/exercise/:id',
+    EXERCISE = '/exercise/:id'
 }
 
 const appNavigationItems = [
@@ -67,7 +59,7 @@ const appNavigationItems = [
         name: 'Diet',
         route: AppRoutes.DIET_PAGE
     }
-]
+];
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -95,13 +87,13 @@ function ResponsiveAppBar() {
     const handleNavItemClick = (route: AppRoutes) => {
         navigate(route);
         setAnchorElNav(null);
-    }
+    };
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <FitnessCenterIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <FitnessCenterIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -109,18 +101,18 @@ function ResponsiveAppBar() {
                         href="/"
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             color: 'inherit',
-                            textDecoration: 'none',
+                            textDecoration: 'none'
                         }}
                     >
                         GYM
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -136,17 +128,17 @@ function ResponsiveAppBar() {
                             anchorEl={anchorElNav}
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'left',
+                                horizontal: 'left'
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'left',
+                                horizontal: 'left'
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: {xs: 'block', md: 'none'}
                             }}
                         >
                             {appNavigationItems.map(({name, route}) => (
@@ -156,7 +148,7 @@ function ResponsiveAppBar() {
                             ))}
                         </Menu>
                     </Box>
-                    <FitnessCenterIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <FitnessCenterIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -164,53 +156,49 @@ function ResponsiveAppBar() {
                         href=""
                         sx={{
                             mr: 2,
-                            display: { xs: 'flex', md: 'none' },
+                            display: {xs: 'flex', md: 'none'},
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             color: 'inherit',
-                            textDecoration: 'none',
+                            textDecoration: 'none'
                         }}
                     >
                         GYM
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {appNavigationItems.map(({name, route}) => (
-                            <Button
-                                key={name}
-                                onClick={() => handleNavItemClick(route)}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
+                            <Button key={name} onClick={() => handleNavItemClick(route)} sx={{my: 2, color: 'white', display: 'block'}}>
                                 {name}
                             </Button>
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
                                 {/* todo: add src to a real avatar image*/}
                                 <Avatar alt="Alex Chernetsky" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{mt: '45px'}}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
                                 vertical: 'top',
-                                horizontal: 'right',
+                                horizontal: 'right'
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'right',
+                                horizontal: 'right'
                             }}
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
+                            {settings.map(setting => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
@@ -234,41 +222,86 @@ export const PageWithResponsiveAppBar: React.FC<IPageWithResponsiveAppBarProps> 
             <ResponsiveAppBar />
             {children}
         </React.Fragment>
-    )
-}
+    );
+};
 
 interface IRequireAuthProps {
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
     const isLoggedIn = useSelector((state: RootState) => state.login.isLoggedIn);
 
-    return (
-        <React.Fragment>
-            {isLoggedIn ? (children) : (<LoginForm />)}
-        </React.Fragment>
-    )
-}
+    return <React.Fragment>{isLoggedIn ? children : <LoginForm />}</React.Fragment>;
+};
 
 function App() {
-  return (
-      <BrowserRouter>
-          <div className={styles.app}>
-              <Routes>
-                      <Route path={AppRoutes.LOGIN} element={<LoginForm />} />
-                      <Route path={AppRoutes.HOME} element={<RequireAuth><Home /></RequireAuth>} />
-                      <Route path={AppRoutes.PROGRESS_PAGE} element={<RequireAuth><ProgressPage /></RequireAuth>} />
-                      <Route path={AppRoutes.CREATE_PROGRESS_ITEM_PAGE} element={<RequireAuth><CreateProgressItemPage /></RequireAuth>} />
-                      <Route path={AppRoutes.SPLIT_WORKOUTS_LIST} element={<RequireAuth><SplitWorkouts /></RequireAuth>} />
-                      <Route path={AppRoutes.SPLIT_WORKOUT} element={<RequireAuth><WorkoutPage /></RequireAuth>} />
-                      <Route path={AppRoutes.EXERCISES_LIST} element={<RequireAuth><Exercises /></RequireAuth>} />
-                      <Route path={AppRoutes.EXERCISE} element={<RequireAuth><ExercisePage /></RequireAuth>} />
-                      {/* todo: add 404 page */}
-              </Routes>
-          </div>
-      </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <div className={styles.app}>
+                <Routes>
+                    <Route path={AppRoutes.LOGIN} element={<LoginForm />} />
+                    <Route
+                        path={AppRoutes.HOME}
+                        element={
+                            <RequireAuth>
+                                <Home />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.PROGRESS_PAGE}
+                        element={
+                            <RequireAuth>
+                                <ProgressPage />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.CREATE_PROGRESS_ITEM_PAGE}
+                        element={
+                            <RequireAuth>
+                                <CreateProgressItemPage />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.SPLIT_WORKOUTS_LIST}
+                        element={
+                            <RequireAuth>
+                                <SplitWorkouts />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.SPLIT_WORKOUT}
+                        element={
+                            <RequireAuth>
+                                <WorkoutPage />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.EXERCISES_LIST}
+                        element={
+                            <RequireAuth>
+                                <Exercises />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path={AppRoutes.EXERCISE}
+                        element={
+                            <RequireAuth>
+                                <ExercisePage />
+                            </RequireAuth>
+                        }
+                    />
+                    {/* todo: add 404 page */}
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

@@ -1,9 +1,9 @@
 .pageWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
 }
 
 .papersWrapper {
@@ -20,19 +20,19 @@
 }
 
 .exercisesNumber {
-  color: lightgray;
+    color: lightgray;
     padding: 5px 0 0 10px;
 }
 
 .workoutName {
-  padding-top: 20px;
-  text-align: center;
-  font-weight: bold;
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .muscleTypes {
-  padding-top: 10px;
-  color: darkgray;
-  text-align: center;
+    padding-top: 10px;
+    color: darkgray;
+    text-align: center;
     text-transform: capitalize;
 }

@@ -5,8 +5,8 @@
     align-items: center;
 }
 
-.exerciseName {;
-    text-transform:  capitalize;
+.exerciseName {
+    text-transform: capitalize;
     list-style: none;
-    color: #1A2027;
+    color: #1a2027;
 }

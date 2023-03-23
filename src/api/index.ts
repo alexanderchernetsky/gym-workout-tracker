@@ -1,5 +1,5 @@
-import {progressItems} from "../mock-data/progressItems";
-import {ICredentials, IUserInfo} from "../features/login/loginSlice";
+import {progressItems} from '../mock-data/progressItems';
+import {ICredentials, IUserInfo} from '../features/login/loginSlice';
 
 // todo: replace with real API calls using axios, add error handling
 const api = {
@@ -9,7 +9,7 @@ const api = {
                 resolve(progressItems);
                 // reject();
             }, 2000);
-        })
+        });
     },
 
     deleteProgressItem: (id: number): Promise<{success: boolean}> => {
@@ -20,10 +20,10 @@ const api = {
                 });
                 // reject();
             }, 2000);
-        })
+        });
     },
 
-    login: (credentials: ICredentials): Promise<{success: boolean, user: IUserInfo}> => {
+    login: (credentials: ICredentials): Promise<{success: boolean; user: IUserInfo}> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({
@@ -35,8 +35,8 @@ const api = {
                 });
                 // reject();
             }, 2000);
-        })
+        });
     }
-}
+};
 
 export default api;

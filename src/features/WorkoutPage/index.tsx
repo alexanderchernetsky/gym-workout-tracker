@@ -1,19 +1,18 @@
-import React from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import React from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import uuid from 'react-uuid';
-import {Button, List, ListItem, ListItemText} from "@mui/material";
+import {Button, List, ListItem, ListItemText} from '@mui/material';
 
-import {workouts} from "../../mock-data/workouts";
-import {PageWithResponsiveAppBar} from "../../App";
+import {workouts} from '../../mock-data/workouts';
+import {PageWithResponsiveAppBar} from '../../App';
 
 import styles from './styles.module.css';
-
 
 // todo: remove inline styles
 const style = {
     width: '100%',
     maxWidth: 360,
-    bgcolor: 'background.paper',
+    bgcolor: 'background.paper'
 };
 
 const SplitWorkouts = () => {
@@ -29,7 +28,7 @@ const SplitWorkouts = () => {
                 workout
             }
         });
-    }
+    };
 
     return (
         <PageWithResponsiveAppBar>
@@ -40,16 +39,18 @@ const SplitWorkouts = () => {
                     {workout.exercises.map(exercise => (
                         <Link to={`/exercise/${exercise.id}`} style={{textDecoration: 'none'}} key={exercise.id}>
                             <ListItem key={exercise.id} button divider>
-                                <ListItemText primary={exercise.name} className={styles.exerciseName}  />
+                                <ListItemText primary={exercise.name} className={styles.exerciseName} />
                             </ListItem>
                         </Link>
                     ))}
                 </List>
 
-                <Button variant="contained" className={styles.button} onClick={handleStartButtonClick}>Start Workout</Button>
+                <Button variant="contained" className={styles.button} onClick={handleStartButtonClick}>
+                    Start Workout
+                </Button>
             </div>
         </PageWithResponsiveAppBar>
-    )
-}
+    );
+};
 
 export default SplitWorkouts;

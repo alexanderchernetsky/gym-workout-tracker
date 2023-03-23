@@ -1,43 +1,43 @@
 .pageWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .addIcon {
-  position: fixed !important;
-  bottom: 50px;
-  right: 50px;
+    position: fixed !important;
+    bottom: 50px;
+    right: 50px;
 }
 
 .indicator {
-  padding-right: 5px;
-  overflow-wrap: break-word;
+    padding-right: 5px;
+    overflow-wrap: break-word;
 }
 
 .indicatorName {
-  text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .indicatorValue {
-  font-weight: 500;
+    font-weight: 500;
 }
 
 .imageWrapper {
-  width: 100%;
-  height: 400px;
-
-  img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    height: 400px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
 .buttonWrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
 }

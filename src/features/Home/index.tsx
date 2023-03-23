@@ -1,30 +1,28 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-
+import React from 'react';
+import {Link} from 'react-router-dom';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
 import styles from './styles.module.css';
-import {PageWithResponsiveAppBar} from "../../App";
-
+import {PageWithResponsiveAppBar} from '../../App';
 
 interface WorkoutType {
-    id: number,
-    name: string,
-    link: string
+    id: number;
+    name: string;
+    link: string;
 }
 
 const workoutTypes: WorkoutType[] = [
     {
         id: 1,
         name: 'Split',
-        link: '/split-workout',
+        link: '/split-workout'
     },
     {
         id: 2,
         name: 'Full-body',
-        link: '/full-body-workout',
-    },
+        link: '/full-body-workout'
+    }
 ];
 
 const Home = () => {
@@ -40,8 +38,8 @@ const Home = () => {
                         '& > :not(style)': {
                             m: 1,
                             width: 156,
-                            height: 128,
-                        },
+                            height: 128
+                        }
                     }}
                 >
                     {workoutTypes.map(type => (
@@ -54,7 +52,7 @@ const Home = () => {
                 </Box>
             </div>
         </PageWithResponsiveAppBar>
-    )
-}
+    );
+};
 
 export default Home;

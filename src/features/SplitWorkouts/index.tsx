@@ -1,13 +1,12 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React from 'react';
+import {Link} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
-import {workouts} from "../../mock-data/workouts";
+import {workouts} from '../../mock-data/workouts';
 
 import styles from './styles.module.css';
-import {PageWithResponsiveAppBar} from "../../App";
-
+import {PageWithResponsiveAppBar} from '../../App';
 
 const SplitWorkouts = () => {
     return (
@@ -23,7 +22,7 @@ const SplitWorkouts = () => {
                             '& > :not(style)': {
                                 m: 1,
                                 width: '100%',
-                                height: 128,
+                                height: 128
                             }
                         }}
                     >
@@ -40,7 +39,7 @@ const SplitWorkouts = () => {
                 </div>
             </div>
         </PageWithResponsiveAppBar>
-    )
-}
+    );
+};
 
 export default SplitWorkouts;

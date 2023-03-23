@@ -1,13 +1,12 @@
-import React from "react";
-import {useParams} from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import React from 'react';
+import {useParams} from 'react-router-dom';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
-import {exercises} from "../../mock-data/exercises";
-import {PageWithResponsiveAppBar} from "../../App";
+import {exercises} from '../../mock-data/exercises';
+import {PageWithResponsiveAppBar} from '../../App';
 
 import styles from './styles.module.css';
-
 
 const boxStyles = {
     display: 'flex',
@@ -15,17 +14,17 @@ const boxStyles = {
     '& > :not(style)': {
         m: 1,
         width: '100%',
-        height: 128,
+        height: 128
     }
-}
+};
 
 const ExercisePage = () => {
-    const {id} = useParams()
+    const {id} = useParams();
 
     const exercise = exercises.find(exercise => exercise.id === Number(id));
 
     if (!exercise) {
-        return <div className={styles.notFound}>Exercise not found.</div>
+        return <div className={styles.notFound}>Exercise not found.</div>;
     }
 
     const image = exercise.image || 'placeholder.jpeg';
@@ -48,6 +47,7 @@ const ExercisePage = () => {
                 </div>
             </div>
         </PageWithResponsiveAppBar>
-    )}
+    );
+};
 
 export default ExercisePage;
