@@ -102,8 +102,8 @@ const CreateProgressItemPage = () => {
         if (isValid && !imageError) {
             const base64img = await toBase64(pictures[0]);
 
-            // @ts-ignore
             dispatch(
+                // @ts-ignore
                 addNewProgressItem({
                     weight: fields.weight,
                     progressIndicators: fields.progressIndicators,
