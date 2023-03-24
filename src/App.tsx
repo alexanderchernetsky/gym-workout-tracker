@@ -241,7 +241,10 @@ interface IRequireAuthProps {
 }
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
-    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+    // to not lose login state after page refresh
+    const user = localStorage.getItem('user');
+
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn) || Boolean(user);
 
     return <React.Fragment>{isLoggedIn ? children : <LoginForm />}</React.Fragment>;
 };

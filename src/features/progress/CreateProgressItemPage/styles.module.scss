@@ -1,0 +1,27 @@
+.form {
+    box-sizing: border-box;
+    padding: 30px;
+    width: 100%;
+}
+
+.field {
+    width: 100%;
+}
+
+.errorMessage {
+    color: #d32f2f !important;
+}
+
+.fieldLabel {
+    margin-top: 20px;
+    display: block;
+}
+
+.imageUploader {
+    margin-top: 20px;
+}
+
+.submitButton {
+    width: 100%;
+    margin-top: 20px !important;
+}

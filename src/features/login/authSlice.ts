@@ -36,6 +36,7 @@ export const loginUser = createAsyncThunk(LoginPageActions.LOG_IN, async (creden
     return response.user;
 });
 
+// createSlice will auto-generate the action types and action creators for you, based on the names of the reducer functions you provide
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -78,9 +79,7 @@ const authSlice = createSlice({
     }
 });
 
-// Extract the action creators object
-const {actions} = authSlice;
 // Extract and export each action creator by name
-export const {logOut} = actions;
+export const {logOut} = authSlice.actions;
 
 export default authSlice.reducer;
