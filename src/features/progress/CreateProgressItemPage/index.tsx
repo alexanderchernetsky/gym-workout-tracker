@@ -163,6 +163,7 @@ const CreateProgressItemPage = () => {
                     {/* Date */}
                     {/* todo: Add date picker field */}
                     {/* Image */}
+                    {/* todo: double-check if .heic works on iphone */}
                     <ImageUploader
                         buttonText="Choose image"
                         className={styles.imageUploader}
@@ -170,7 +171,7 @@ const CreateProgressItemPage = () => {
                         singleImage
                         withIcon
                         onChange={onImageDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                        imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg', '.heic']}
                         maxFileSize={MAX_IMAGE_SIZE}
                     />
                     {imageError && <Alert severity="error">The image is required.</Alert>}
