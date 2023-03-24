@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import ImageUploader from 'react-images-upload';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
+import uuid from 'react-uuid';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -9,7 +12,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 
-import {PageWithResponsiveAppBar} from '../../../App';
+import {AppRoutes, PageWithResponsiveAppBar} from '../../../App';
+import {addNewProgressItem, LoadingStateType} from '../progressSlice';
+import {RootState} from '../../../store';
 
 import styles from './styles.module.scss';
 
@@ -50,9 +55,25 @@ const progressIndicatorsFieldValidationRules = {
     }
 };
 
+// todo: move to a separate helper file
+const toBase64 = (file: File) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
 const CreateProgressItemPage = () => {
     const [pictures, setPictures] = useState<File[]>([]);
     const [imageError, setImageError] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const loadingState = useSelector((state: RootState) => state.progress.loadingState);
+
+    const isUploadError = loadingState === LoadingStateType.Error;
 
     const onImageDrop = (pictureFiles: File[], pictureDataURLs: string[]) => {
         setPictures(pictureFiles);
@@ -71,11 +92,7 @@ const CreateProgressItemPage = () => {
         formState: {isValid}
     } = methods;
 
-    const onSubmit: SubmitHandler<ProgressItemFormValues> = fields => {
-        console.log('fields', fields);
-        console.log('isValid', isValid);
-        console.log('pictureFiles', pictures);
-
+    const onSubmit: SubmitHandler<ProgressItemFormValues> = async fields => {
         if (!pictures.length) {
             setImageError(true);
 
@@ -83,7 +100,21 @@ const CreateProgressItemPage = () => {
         }
 
         if (isValid && !imageError) {
-            // todo: dispatch action
+            const base64img = await toBase64(pictures[0]);
+
+            // @ts-ignore
+            dispatch(
+                addNewProgressItem({
+                    weight: fields.weight,
+                    progressIndicators: fields.progressIndicators,
+                    image: base64img as string,
+                    id: uuid(),
+                    // todo: replace with date from the date picker
+                    date: new Date().toString()
+                })
+            );
+
+            // todo: navigate to the progress page if success only
         }
     };
 
@@ -129,6 +160,8 @@ const CreateProgressItemPage = () => {
                             </React.Fragment>
                         )}
                     />
+                    {/* Date */}
+                    {/* todo: Add date picker field */}
                     {/* Image */}
                     <ImageUploader
                         buttonText="Choose image"
@@ -137,16 +170,17 @@ const CreateProgressItemPage = () => {
                         singleImage
                         withIcon
                         onChange={onImageDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                        imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
                         maxFileSize={MAX_IMAGE_SIZE}
                     />
                     {imageError && <Alert severity="error">The image is required.</Alert>}
                     {/* Submit */}
-                    <Button variant="contained" type="submit" className={styles.submitButton}>
+                    <Button variant="contained" type="submit" className={styles.submitButton} disabled={loadingState === LoadingStateType.Loading}>
                         Submit
                     </Button>
                 </FormProvider>
             </form>
+            {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
         </PageWithResponsiveAppBar>
     );
 };

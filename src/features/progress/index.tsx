@@ -15,7 +15,6 @@ import photo from '../../images/arnold_physcial_shape.jpeg';
 import {AppRoutes, PageWithResponsiveAppBar} from '../../App';
 import {deleteProgressItem, getProgressItems, LoadingStateType} from './progressSlice';
 import {RootState} from '../../store';
-import {ProgressItem} from '../../mock-data/progressItems';
 import Error from '../../components/Error';
 import Loading from '../../components/Loading';
 
@@ -24,8 +23,7 @@ import styles from './styles.module.scss';
 const ProgressPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // todo: make sure ts type is inferred
-    const progressItems: ProgressItem[] = useSelector((state: RootState) => state.progress.progressItems);
+    const progressItems = useSelector((state: RootState) => state.progress.progressItems);
     const loadingState = useSelector((state: RootState) => state.progress.loadingState);
 
     const onAddIconClick = () => {
@@ -38,7 +36,7 @@ const ProgressPage = () => {
         dispatch(getProgressItems());
     }, [dispatch]);
 
-    const onDeleteBtnClick = (id: number) => {
+    const onDeleteBtnClick = (id: string) => {
         // todo: get rid of ts ignore
         // @ts-ignore
         dispatch(deleteProgressItem(id));
@@ -56,25 +54,17 @@ const ProgressPage = () => {
                             return (
                                 <Card sx={{minWidth: 275, width: '90%', marginTop: '20px'}} key={item.id}>
                                     <div className={styles.imageWrapper}>
-                                        <img src={photo} alt="physical shape" />
+                                        <img src={item.image || photo} alt="physical shape" />
                                     </div>
                                     <CardContent>
                                         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                            {/* todo: transform date to sth readable */}
                                             {item.date}
                                         </Typography>
                                         <Typography sx={{mb: 1.5}} color="text.secondary">
                                             Weight: {item.weight}
                                         </Typography>
-                                        <Typography variant="body2">
-                                            {item.indicators.map(indicator => {
-                                                return (
-                                                    <span key={indicator[0]} className={styles.indicator}>
-                                                        <span className={styles.indicatorName}>{indicator[0]}</span>:{' '}
-                                                        <span className={styles.indicatorValue}>{indicator[1]};</span>
-                                                    </span>
-                                                );
-                                            })}
-                                        </Typography>
+                                        <Typography variant="body2">{item.progressIndicators}</Typography>
                                         <Stack direction="row" spacing={2} className={styles.buttonWrapper}>
                                             {/* todo: handle edit */}
                                             <Button variant="contained" endIcon={<EditIcon />}>

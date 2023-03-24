@@ -1,11 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import api from '../../api';
-import {ProgressItem} from '../../mock-data/progressItems';
 
 enum ProgressPageActions {
     GET_PROGRESS_ITEMS = 'PROGRESS/GET_PROGRESS_ITEMS',
-    DELETE_PROGRESS_ITEM = 'DELETE_PROGRESS_ITEM'
+    DELETE_PROGRESS_ITEM = 'PROGRESS/DELETE_PROGRESS_ITEM',
+    ADD_NEW_PROGRESS_ITEM = 'PROGRESS/ADD_NEW_PROGRESS_ITEM'
 }
 
 export const getProgressItems = createAsyncThunk(ProgressPageActions.GET_PROGRESS_ITEMS, async () => {
@@ -14,10 +14,24 @@ export const getProgressItems = createAsyncThunk(ProgressPageActions.GET_PROGRES
     return response;
 });
 
-export const deleteProgressItem = createAsyncThunk(ProgressPageActions.DELETE_PROGRESS_ITEM, async (id: number) => {
+export const deleteProgressItem = createAsyncThunk(ProgressPageActions.DELETE_PROGRESS_ITEM, async (id: string) => {
     await api.deleteProgressItem(id);
 
     return id;
+});
+
+export interface IProgressItem {
+    id: string;
+    date: string;
+    weight: number;
+    progressIndicators: string;
+    image: string; // base64
+}
+
+export const addNewProgressItem = createAsyncThunk(ProgressPageActions.ADD_NEW_PROGRESS_ITEM, async (data: IProgressItem) => {
+    const response = await api.addNewProgressItem(data);
+
+    return response.data;
 });
 
 export enum LoadingStateType {
@@ -29,7 +43,7 @@ export enum LoadingStateType {
 
 interface IProgressFeatureState {
     loadingState: LoadingStateType;
-    progressItems: ProgressItem[];
+    progressItems: IProgressItem[];
 }
 
 const initialState: IProgressFeatureState = {
@@ -42,12 +56,12 @@ export const progressSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        // todo: handle loading and error states
+        // GET
         builder
-            .addCase(getProgressItems.fulfilled, (state: IProgressFeatureState, action) => {
+            .addCase(getProgressItems.fulfilled, (state, action) => {
                 return {
                     loadingState: LoadingStateType.Success,
-                    progressItems: action.payload as ProgressItem[]
+                    progressItems: action.payload as IProgressItem[]
                 };
             })
             .addCase(getProgressItems.rejected, (state, action) => {
@@ -62,6 +76,7 @@ export const progressSlice = createSlice({
                     progressItems: []
                 };
             })
+            // DELETE
             .addCase(deleteProgressItem.rejected, (state, action) => {
                 return {
                     loadingState: LoadingStateType.Error,
@@ -78,6 +93,25 @@ export const progressSlice = createSlice({
                 return {
                     loadingState: LoadingStateType.Success,
                     progressItems: state.progressItems.filter(item => item.id !== action.payload)
+                };
+            })
+            // ADD
+            .addCase(addNewProgressItem.fulfilled, (state, action) => {
+                return {
+                    loadingState: LoadingStateType.Success,
+                    progressItems: [...state.progressItems, action.payload]
+                };
+            })
+            .addCase(addNewProgressItem.pending, state => {
+                return {
+                    ...state,
+                    loadingState: LoadingStateType.Loading
+                };
+            })
+            .addCase(addNewProgressItem.rejected, state => {
+                return {
+                    ...state,
+                    loadingState: LoadingStateType.Error
                 };
             });
     }
