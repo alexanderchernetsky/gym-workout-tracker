@@ -6,17 +6,17 @@ import {IProgressItem} from '../features/progress/progressSlice';
 const api = {
     fetchProgressItems: () => {
         return new Promise((resolve, reject) => {
-            const existingItems = JSON.parse(localStorage.getItem('progressItems'));
+            const existingItems: IProgressItem[] | null = JSON.parse(localStorage.getItem('progressItems'));
 
             setTimeout(() => {
-                resolve(existingItems.length ? existingItems : progressItems);
+                resolve(existingItems?.length ? existingItems : progressItems);
                 // reject();
             }, 2000);
         });
     },
 
     deleteProgressItem: (id: string): Promise<{success: boolean}> => {
-        const existingItems: IProgressItem[] = JSON.parse(localStorage.getItem('progressItems'));
+        const existingItems: IProgressItem[] | null = JSON.parse(localStorage.getItem('progressItems'));
         const updatedItems = existingItems.filter(item => item.id !== id);
         localStorage.setItem('progressItems', JSON.stringify(updatedItems));
 

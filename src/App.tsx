@@ -95,6 +95,7 @@ function ResponsiveAppBar() {
 
     const handleLogOut = () => {
         dispatch(logOut());
+        navigate(AppRoutes.LOGIN);
     };
 
     return (
