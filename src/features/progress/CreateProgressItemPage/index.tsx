@@ -4,6 +4,7 @@ import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form'
 import uuid from 'react-uuid';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
+import heic2any from 'heic2any';
 
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -67,6 +68,7 @@ const toBase64 = (file: File) =>
 const CreateProgressItemPage = () => {
     const [pictures, setPictures] = useState<File[]>([]);
     const [imageError, setImageError] = useState(false);
+    const [isImageConversionError, setImageConversionError] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -92,6 +94,8 @@ const CreateProgressItemPage = () => {
         formState: {isValid}
     } = methods;
 
+    console.log('pictures', pictures);
+
     const onSubmit: SubmitHandler<ProgressItemFormValues> = async fields => {
         if (!pictures.length) {
             setImageError(true);
@@ -100,7 +104,43 @@ const CreateProgressItemPage = () => {
         }
 
         if (isValid && !imageError) {
-            const base64img = await toBase64(pictures[0]);
+            const photo = pictures[0];
+            const HEIC_IMAGE_MIME_TYPE = 'image/heic';
+            let converted;
+            const isHEIC = photo.type === HEIC_IMAGE_MIME_TYPE;
+
+            if (isHEIC) {
+                // let reader = new FileReader();
+                // let blob: Blob;
+                //
+                // reader.readAsText(photo);
+                // reader.onload = function() {
+                //     // @ts-ignore
+                //     blob = reader.result;
+                // };
+                // reader.onerror = function() {
+                //     setImageConversionError(true);
+                //     console.error(reader.error);
+                // };
+
+                heic2any({
+                    // @ts-ignore File = Blob ?
+                    photo,
+                    toType: 'image/jpeg',
+                    quality: 1
+                })
+                    .then(conversionResult => {
+                        // FileSaver.saveAs(conversionResult, 'conversion.jpg');
+                        console.log('conversionResult', conversionResult);
+                        converted = conversionResult;
+                    })
+                    .catch(error => {
+                        setImageConversionError(true);
+                        console.error(`Error converting file: ${error}`);
+                    });
+            }
+
+            const base64img = await toBase64(isHEIC ? converted : photo);
 
             dispatch(
                 addNewProgressItem({
@@ -171,7 +211,7 @@ const CreateProgressItemPage = () => {
                             singleImage
                             withIcon
                             onChange={onImageDrop}
-                            imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg', '.heic']}
+                            imgExtension={['.jpg', '.gif', '.png', '.jpeg', '.heic']}
                             maxFileSize={MAX_IMAGE_SIZE}
                         />
                         {imageError && <Alert severity="error">The image is required.</Alert>}
@@ -182,6 +222,7 @@ const CreateProgressItemPage = () => {
                     </FormProvider>
                 </form>
                 {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
+                {isImageConversionError && <Alert severity="error">Image upload failed. Allowed image types: .jpg, .gif, .png, .jpeg.</Alert>}
             </div>
         </PageWithResponsiveAppBar>
     );
