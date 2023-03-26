@@ -52,7 +52,7 @@ const ProgressPage = () => {
                         </Fab>
                         {progressItems.map(item => {
                             return (
-                                <Card sx={{minWidth: 275, width: '90%', marginTop: '20px'}} key={item.id}>
+                                <Card className={styles.progressItemCard} sx={{minWidth: 275, width: '90%', marginTop: '20px'}} key={item.id}>
                                     <div className={styles.imageWrapper}>
                                         <img src={item.image || photo} alt="physical shape" />
                                     </div>

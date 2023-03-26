@@ -66,47 +66,49 @@ const LoginForm = () => {
             <Typography variant="h3" component="h3" className={styles.heading}>
                 GYM
             </Typography>
-            <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
-                <FormProvider {...methods}>
-                    <Controller
-                        name="email"
-                        rules={emailFieldValidationRules}
-                        render={({field, fieldState: {error}}) => (
-                            <TextField
-                                {...field}
-                                className={styles.field}
-                                error={Boolean(error)}
-                                helperText={error ? error.message : ''}
-                                label="Email"
-                                variant="outlined"
-                                autoComplete="off"
-                                required
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="password"
-                        rules={passwordFieldValidationRules}
-                        render={({field, fieldState: {error}}) => (
-                            <TextField
-                                {...field}
-                                className={styles.field}
-                                error={Boolean(error)}
-                                helperText={error ? error.message : ''}
-                                label="Password"
-                                variant="outlined"
-                                autoComplete="off"
-                                type="password"
-                                required
-                            />
-                        )}
-                    />
-                    <Button variant="contained" type="submit" disabled={loadingState === LoadingStateType.Loading}>
-                        Login
-                    </Button>
-                </FormProvider>
-            </form>
-            {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
+            <div className={styles.formWrapper}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                    <FormProvider {...methods}>
+                        <Controller
+                            name="email"
+                            rules={emailFieldValidationRules}
+                            render={({field, fieldState: {error}}) => (
+                                <TextField
+                                    {...field}
+                                    className={styles.field}
+                                    error={Boolean(error)}
+                                    helperText={error ? error.message : ''}
+                                    label="Email"
+                                    variant="outlined"
+                                    autoComplete="off"
+                                    required
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="password"
+                            rules={passwordFieldValidationRules}
+                            render={({field, fieldState: {error}}) => (
+                                <TextField
+                                    {...field}
+                                    className={styles.field}
+                                    error={Boolean(error)}
+                                    helperText={error ? error.message : ''}
+                                    label="Password"
+                                    variant="outlined"
+                                    autoComplete="off"
+                                    type="password"
+                                    required
+                                />
+                            )}
+                        />
+                        <Button variant="contained" type="submit" disabled={loadingState === LoadingStateType.Loading}>
+                            Login
+                        </Button>
+                    </FormProvider>
+                </form>
+                {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
+            </div>
         </React.Fragment>
     );
 };

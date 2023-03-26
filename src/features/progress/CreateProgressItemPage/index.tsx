@@ -120,68 +120,70 @@ const CreateProgressItemPage = () => {
 
     return (
         <PageWithResponsiveAppBar>
-            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                <FormProvider {...methods}>
-                    {/*Weight*/}
-                    <span className={styles.fieldLabel}>Weight:</span>
-                    <Controller
-                        name="weight"
-                        rules={weightFieldValidationRules}
-                        render={({field, fieldState: {error}}) => (
-                            <React.Fragment>
-                                <OutlinedInput
-                                    {...field}
-                                    error={Boolean(error)}
-                                    id="outlined-adornment-weight"
-                                    endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'weight'
-                                    }}
-                                    className={styles.field}
-                                />
-                                <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
-                                    {error ? error.message : ''}
-                                </FormHelperText>
-                            </React.Fragment>
-                        )}
-                    />
-                    {/*Progress*/}
-                    <span className={styles.fieldLabel}>Progress indicators:</span>
-                    <Controller
-                        name="progressIndicators"
-                        rules={progressIndicatorsFieldValidationRules}
-                        render={({field, fieldState: {error}}) => (
-                            <React.Fragment>
-                                <TextField {...field} error={Boolean(error)} id="outlined-multiline-static" multiline rows={4} className={styles.field} />
-                                <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
-                                    {error ? error.message : ''}
-                                </FormHelperText>
-                            </React.Fragment>
-                        )}
-                    />
-                    {/* Date */}
-                    {/* todo: Add date picker field */}
-                    {/* Image */}
-                    {/* todo: double-check if .heic works on iphone */}
-                    <ImageUploader
-                        buttonText="Choose image"
-                        className={styles.imageUploader}
-                        withPreview
-                        singleImage
-                        withIcon
-                        onChange={onImageDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg', '.heic']}
-                        maxFileSize={MAX_IMAGE_SIZE}
-                    />
-                    {imageError && <Alert severity="error">The image is required.</Alert>}
-                    {/* Submit */}
-                    <Button variant="contained" type="submit" className={styles.submitButton} disabled={loadingState === LoadingStateType.Loading}>
-                        Submit
-                    </Button>
-                </FormProvider>
-            </form>
-            {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
+            <div className={styles.formWrapper}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                    <FormProvider {...methods}>
+                        {/*Weight*/}
+                        <span className={styles.fieldLabel}>Weight:</span>
+                        <Controller
+                            name="weight"
+                            rules={weightFieldValidationRules}
+                            render={({field, fieldState: {error}}) => (
+                                <React.Fragment>
+                                    <OutlinedInput
+                                        {...field}
+                                        error={Boolean(error)}
+                                        id="outlined-adornment-weight"
+                                        endAdornment={<InputAdornment position="end">kg</InputAdornment>}
+                                        aria-describedby="outlined-weight-helper-text"
+                                        inputProps={{
+                                            'aria-label': 'weight'
+                                        }}
+                                        className={styles.field}
+                                    />
+                                    <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
+                                        {error ? error.message : ''}
+                                    </FormHelperText>
+                                </React.Fragment>
+                            )}
+                        />
+                        {/*Progress*/}
+                        <span className={styles.fieldLabel}>Progress indicators:</span>
+                        <Controller
+                            name="progressIndicators"
+                            rules={progressIndicatorsFieldValidationRules}
+                            render={({field, fieldState: {error}}) => (
+                                <React.Fragment>
+                                    <TextField {...field} error={Boolean(error)} id="outlined-multiline-static" multiline rows={4} className={styles.field} />
+                                    <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
+                                        {error ? error.message : ''}
+                                    </FormHelperText>
+                                </React.Fragment>
+                            )}
+                        />
+                        {/* Date */}
+                        {/* todo: Add date picker field */}
+                        {/* Image */}
+                        {/* todo: double-check if .heic works on iphone */}
+                        <ImageUploader
+                            buttonText="Choose image"
+                            className={styles.imageUploader}
+                            withPreview
+                            singleImage
+                            withIcon
+                            onChange={onImageDrop}
+                            imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg', '.heic']}
+                            maxFileSize={MAX_IMAGE_SIZE}
+                        />
+                        {imageError && <Alert severity="error">The image is required.</Alert>}
+                        {/* Submit */}
+                        <Button variant="contained" type="submit" className={styles.submitButton} disabled={loadingState === LoadingStateType.Loading}>
+                            Submit
+                        </Button>
+                    </FormProvider>
+                </form>
+                {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
+            </div>
         </PageWithResponsiveAppBar>
     );
 };

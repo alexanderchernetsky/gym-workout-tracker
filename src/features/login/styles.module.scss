@@ -5,9 +5,19 @@
 
 .formWrapper {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 20px;
+    min-width: 250px;
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .field {
