@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import photo from '../../images/arnold_physcial_shape.jpeg';
 import {AppRoutes, PageWithResponsiveAppBar} from '../../App';
 import {deleteProgressItem, getProgressItems, LoadingStateType} from './progressSlice';
-import {RootState} from '../../store';
+import {AppDispatch, RootState} from '../../store';
 import Error from '../../components/Error';
 import Loading from '../../components/Loading';
 
@@ -22,7 +22,7 @@ import styles from './styles.module.scss';
 
 const ProgressPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>(); //  we have to add <AppDispatch> here to avoid issue - Argument of type 'AsyncThunkAction' is not assignable to parameter of type 'AnyAction'
     const progressItems = useSelector((state: RootState) => state.progress.progressItems);
     const loadingState = useSelector((state: RootState) => state.progress.loadingState);
 
@@ -31,14 +31,10 @@ const ProgressPage = () => {
     };
 
     useEffect(() => {
-        // todo: get rid of ts ignore
-        // @ts-ignore
         dispatch(getProgressItems());
     }, [dispatch]);
 
     const onDeleteBtnClick = (id: string) => {
-        // todo: get rid of ts ignore
-        // @ts-ignore
         dispatch(deleteProgressItem(id));
     };
 

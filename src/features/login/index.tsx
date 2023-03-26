@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 import {loginUser} from './authSlice';
-import {RootState} from '../../store';
+import {AppDispatch, RootState} from '../../store';
 import {LoadingStateType} from '../progress/progressSlice';
 
 import styles from './styles.module.scss';
@@ -28,7 +28,7 @@ const passwordFieldValidationRules = {
 };
 
 const LoginForm = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const loadingState = useSelector((state: RootState) => state.auth.loadingState);
     const user = useSelector((state: RootState) => state.auth.user);
@@ -47,8 +47,6 @@ const LoginForm = () => {
 
     const onSubmit: SubmitHandler<LoginInputs> = fields => {
         if (isValid) {
-            // todo
-            // @ts-ignore
             dispatch(loginUser(fields));
         }
     };

@@ -14,7 +14,7 @@ import Alert from '@mui/material/Alert';
 
 import {AppRoutes, PageWithResponsiveAppBar} from '../../../App';
 import {addNewProgressItem, LoadingStateType} from '../progressSlice';
-import {RootState} from '../../../store';
+import {AppDispatch, RootState} from '../../../store';
 
 import styles from './styles.module.scss';
 
@@ -68,7 +68,7 @@ const CreateProgressItemPage = () => {
     const [pictures, setPictures] = useState<File[]>([]);
     const [imageError, setImageError] = useState(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const loadingState = useSelector((state: RootState) => state.progress.loadingState);
@@ -103,7 +103,6 @@ const CreateProgressItemPage = () => {
             const base64img = await toBase64(pictures[0]);
 
             dispatch(
-                // @ts-ignore
                 addNewProgressItem({
                     weight: fields.weight,
                     progressIndicators: fields.progressIndicators,
