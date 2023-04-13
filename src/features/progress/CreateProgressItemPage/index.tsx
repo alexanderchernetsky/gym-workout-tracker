@@ -142,7 +142,7 @@ const CreateProgressItemPage = () => {
 
             const base64img = await toBase64(isHEIC ? converted : photo);
 
-            dispatch(
+            const result = await dispatch(
                 addNewProgressItem({
                     weight: fields.weight,
                     progressIndicators: fields.progressIndicators,
@@ -153,12 +153,18 @@ const CreateProgressItemPage = () => {
                 })
             );
 
-            // todo: navigate to the progress page if success only
+            if (addNewProgressItem.fulfilled.match(result)) {
+                navigate(AppRoutes.PROGRESS_PAGE);
+            } else {
+                // if failed isUploadError will be set to true and Alert will be shown
+            }
         }
     };
 
     return (
         <PageWithResponsiveAppBar>
+            {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
+            {isImageConversionError && <Alert severity="error">Image upload failed. Allowed image types: .jpg, .gif, .png, .jpeg.</Alert>}
             <div className={styles.formWrapper}>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
@@ -203,7 +209,7 @@ const CreateProgressItemPage = () => {
                         {/* Date */}
                         {/* todo: Add date picker field */}
                         {/* Image */}
-                        {/* todo: double-check if .heic works on iphone */}
+                        {/* todo: double-check if .heic works on a real iphone device */}
                         <ImageUploader
                             buttonText="Choose image"
                             className={styles.imageUploader}
@@ -221,8 +227,6 @@ const CreateProgressItemPage = () => {
                         </Button>
                     </FormProvider>
                 </form>
-                {isUploadError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
-                {isImageConversionError && <Alert severity="error">Image upload failed. Allowed image types: .jpg, .gif, .png, .jpeg.</Alert>}
             </div>
         </PageWithResponsiveAppBar>
     );

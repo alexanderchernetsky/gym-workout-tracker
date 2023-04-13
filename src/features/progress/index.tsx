@@ -17,6 +17,7 @@ import {deleteProgressItem, getProgressItems, LoadingStateType} from './progress
 import {AppDispatch, RootState} from '../../store';
 import Error from '../../components/Error';
 import Loading from '../../components/Loading';
+import sortProgressItemsByDate from './sortProgressItemsByDate';
 
 import styles from './styles.module.scss';
 
@@ -38,6 +39,8 @@ const ProgressPage = () => {
         dispatch(deleteProgressItem(id));
     };
 
+    const sortedProgressItems = sortProgressItemsByDate(progressItems);
+
     return (
         <PageWithResponsiveAppBar>
             <div className={styles.pageWrapper}>
@@ -46,7 +49,7 @@ const ProgressPage = () => {
                         <Fab color="primary" aria-label="add" className={styles.addIcon}>
                             <AddIcon onClick={onAddIconClick} />
                         </Fab>
-                        {progressItems.map(item => {
+                        {sortedProgressItems.map(item => {
                             return (
                                 <Card className={styles.progressItemCard} sx={{minWidth: 275, width: '90%', marginTop: '20px'}} key={item.id}>
                                     <div className={styles.imageWrapper}>

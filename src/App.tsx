@@ -40,7 +40,6 @@ export enum AppRoutes {
     LOGIN = '/login',
     PROGRESS_PAGE = '/progress',
     CREATE_PROGRESS_ITEM_PAGE = '/progress/create',
-    DIET_PAGE = '/diet',
     SPLIT_WORKOUTS_LIST = '/split-workout',
     FULL_BODY_WORKOUTS_LIST = '/full-body-workout',
     SPLIT_WORKOUT = '/split-workout/:id',
@@ -57,10 +56,6 @@ const appNavigationItems = [
     {
         name: 'Progress',
         route: AppRoutes.PROGRESS_PAGE
-    },
-    {
-        name: 'Diet',
-        route: AppRoutes.DIET_PAGE
     }
 ];
 

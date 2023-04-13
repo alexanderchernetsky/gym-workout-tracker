@@ -99,7 +99,7 @@ export const progressSlice = createSlice({
             .addCase(addNewProgressItem.fulfilled, (state, action) => {
                 return {
                     loadingState: LoadingStateType.Success,
-                    progressItems: [...state.progressItems, action.payload]
+                    progressItems: [action.payload, ...state.progressItems]
                 };
             })
             .addCase(addNewProgressItem.pending, state => {
