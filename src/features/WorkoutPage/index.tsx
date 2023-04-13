@@ -4,7 +4,7 @@ import uuid from 'react-uuid';
 import {Button, List, ListItem, ListItemText} from '@mui/material';
 
 import {workouts} from '../../mock-data/workouts';
-import {PageWithResponsiveAppBar} from '../../App';
+import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
 
 import styles from './styles.module.css';
 

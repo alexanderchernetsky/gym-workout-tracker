@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -9,11 +10,10 @@ import Alert from '@mui/material/Alert';
 
 import {loginUser} from './authSlice';
 import {AppDispatch, RootState} from '../../store';
+import {AppRoutes} from '../../constants/routes';
 import {LoadingStateType} from '../progress/progressSlice';
 
 import styles from './styles.module.scss';
-import {AppRoutes} from '../../App';
-import {useNavigate} from 'react-router-dom';
 
 type LoginInputs = {
     email: string;

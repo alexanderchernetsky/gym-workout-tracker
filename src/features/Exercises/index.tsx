@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Chip, List, ListItem, ListItemText} from '@mui/material';
 
 import {exercises} from '../../mock-data/exercises';
-import {PageWithResponsiveAppBar} from '../../App';
+import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
 
 import styles from './styles.module.css';
 

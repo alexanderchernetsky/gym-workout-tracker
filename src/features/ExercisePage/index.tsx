@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 import {exercises} from '../../mock-data/exercises';
-import {PageWithResponsiveAppBar} from '../../App';
+import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
 
 import styles from './styles.module.css';
 

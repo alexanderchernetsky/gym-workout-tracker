@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import ImageUploader from 'react-images-upload';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import uuid from 'react-uuid';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import heic2any from 'heic2any';
+import classNames from 'classnames';
+import {Moment} from 'moment';
 
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -13,17 +14,19 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 
-import {AppRoutes, PageWithResponsiveAppBar} from '../../../App';
+import {PageWithResponsiveAppBar} from '../../../components/ResponsiveAppBar';
+import {AppRoutes} from '../../../constants/routes';
 import {addNewProgressItem, LoadingStateType} from '../progressSlice';
 import {AppDispatch, RootState} from '../../../store';
 
 import styles from './styles.module.scss';
 
-const MAX_IMAGE_SIZE = 5242880;
+const MAX_IMAGE_SIZE = 5242880; // 5.24 MB
 
 type ProgressItemFormValues = {
     weight: number;
     progressIndicators: string;
+    date: Moment;
 };
 
 const weightFieldValidationRules = {
@@ -56,6 +59,13 @@ const progressIndicatorsFieldValidationRules = {
     }
 };
 
+const dateFieldValidationRules = {
+    required: {
+        value: true,
+        message: 'This is a required field'
+    }
+};
+
 // todo: move to a separate helper file
 const toBase64 = (file: File) =>
     new Promise((resolve, reject) => {
@@ -76,11 +86,6 @@ const CreateProgressItemPage = () => {
     const loadingState = useSelector((state: RootState) => state.progress.loadingState);
 
     const isUploadError = loadingState === LoadingStateType.Error;
-
-    const onImageDrop = (pictureFiles: File[], pictureDataURLs: string[]) => {
-        setPictures(pictureFiles);
-        setImageError(false);
-    };
 
     const methods = useForm<ProgressItemFormValues>({
         defaultValues: {
@@ -110,34 +115,22 @@ const CreateProgressItemPage = () => {
             const isHEIC = photo.type === HEIC_IMAGE_MIME_TYPE;
 
             if (isHEIC) {
-                // let reader = new FileReader();
-                // let blob: Blob;
-                //
-                // reader.readAsText(photo);
-                // reader.onload = function() {
-                //     // @ts-ignore
-                //     blob = reader.result;
-                // };
-                // reader.onerror = function() {
-                //     setImageConversionError(true);
-                //     console.error(reader.error);
-                // };
-
-                heic2any({
-                    // @ts-ignore File = Blob ?
-                    photo,
-                    toType: 'image/jpeg',
-                    quality: 1
-                })
-                    .then(conversionResult => {
-                        // FileSaver.saveAs(conversionResult, 'conversion.jpg');
-                        console.log('conversionResult', conversionResult);
-                        converted = conversionResult;
-                    })
-                    .catch(error => {
-                        setImageConversionError(true);
-                        console.error(`Error converting file: ${error}`);
-                    });
+                // todo: handle heic (iphone images type)
+                // heic2any({
+                //     // @ts-ignore File = Blob ?
+                //     photo,
+                //     toType: 'image/jpeg',
+                //     quality: 1
+                // })
+                //     .then(conversionResult => {
+                //         // FileSaver.saveAs(conversionResult, 'conversion.jpg');
+                //         console.log('conversionResult', conversionResult);
+                //         converted = conversionResult;
+                //     })
+                //     .catch(error => {
+                //         setImageConversionError(true);
+                //         console.error(`Error converting file: ${error}`);
+                //     });
             }
 
             const base64img = await toBase64(isHEIC ? converted : photo);
@@ -148,8 +141,7 @@ const CreateProgressItemPage = () => {
                     progressIndicators: fields.progressIndicators,
                     image: base64img as string,
                     id: uuid(),
-                    // todo: replace with date from the date picker
-                    date: new Date().toString()
+                    date: fields.date.format() // "2014-09-08T08:02:17-05:00" (ISO 8601, no fractional seconds)
                 })
             );
 
@@ -207,19 +199,21 @@ const CreateProgressItemPage = () => {
                             )}
                         />
                         {/* Date */}
-                        {/* todo: Add date picker field */}
-                        {/* Image */}
-                        {/* todo: double-check if .heic works on a real iphone device */}
-                        <ImageUploader
-                            buttonText="Choose image"
-                            className={styles.imageUploader}
-                            withPreview
-                            singleImage
-                            withIcon
-                            onChange={onImageDrop}
-                            imgExtension={['.jpg', '.gif', '.png', '.jpeg', '.heic']}
-                            maxFileSize={MAX_IMAGE_SIZE}
+                        <span className={styles.fieldLabel}>Date:</span>
+                        <Controller
+                            name="date"
+                            rules={dateFieldValidationRules}
+                            render={({field, fieldState: {error}}) => (
+                                <React.Fragment>
+                                    <DatePicker {...field} className={classNames(styles.field, Boolean(error) && styles.fieldWithError)} disableFuture />
+                                    <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
+                                        {error ? error.message : ''}
+                                    </FormHelperText>
+                                </React.Fragment>
+                            )}
                         />
+                        {/* Image */}
+                        {/* todo: find another ImageUploader, double-check if .heic works on a real iphone device */}
                         {imageError && <Alert severity="error">The image is required.</Alert>}
                         {/* Submit */}
                         <Button variant="contained" type="submit" className={styles.submitButton} disabled={loadingState === LoadingStateType.Loading}>

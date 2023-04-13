@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import {workouts} from '../../mock-data/workouts';
 
 import styles from './styles.module.css';
-import {PageWithResponsiveAppBar} from '../../App';
+import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
 
 const SplitWorkouts = () => {
     return (

@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 import styles from './styles.module.css';
-import {PageWithResponsiveAppBar} from '../../App';
+import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
 
 interface WorkoutType {
     id: number;
