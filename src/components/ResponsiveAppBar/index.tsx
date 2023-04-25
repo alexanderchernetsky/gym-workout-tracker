@@ -1,7 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 
 import {AppRoutes} from '../../constants/routes';
-import {logOut} from '../../features/login/authSlice';
+import {logOut} from '../../features/auth/authSlice';
 
 const appBarNavigationItems = [
     {
@@ -30,7 +29,7 @@ const appBarNavigationItems = [
     }
 ];
 
-const appBarSettings = ['Profile', 'Account', 'Dashboard'];
+const appBarSettings = ['Profile'];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

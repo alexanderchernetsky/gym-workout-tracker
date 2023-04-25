@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -59,6 +58,10 @@ const LoginForm = () => {
         }
     }, [user, navigate]);
 
+    const onSignUpLinkClick = () => {
+        navigate(AppRoutes.REGISTER);
+    };
+
     return (
         <React.Fragment>
             <Typography variant="h3" component="h3" className={styles.heading}>
@@ -105,6 +108,12 @@ const LoginForm = () => {
                         </Button>
                     </FormProvider>
                 </form>
+                <div className={styles.signUpWrapper}>
+                    <div className={styles.signUpText}>Don't have an account yet?</div>
+                    <div className={styles.signUpLink} onClick={onSignUpLinkClick}>
+                        Sign Up!
+                    </div>
+                </div>
                 {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
             </div>
         </React.Fragment>

@@ -1,8 +1,8 @@
 import {progressItems} from '../mock-data/progressItems';
-import {ICredentials, IUserInfo} from '../features/login/authSlice';
+import {ICredentials, IUserInfo} from '../features/auth/authSlice';
 import {IProgressItem} from '../features/progress/progressSlice';
 
-// todo: replace with real API calls using axios, add error handling
+// todo: replace with real API calls using axios/RTK Query, add error handling
 const api = {
     fetchProgressItems: () => {
         return new Promise((resolve, reject) => {

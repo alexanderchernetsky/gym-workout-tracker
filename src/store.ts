@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 
 import progressReducer from './features/progress/progressSlice';
-import authReducer from './features/login/authSlice';
+import authReducer from './features/auth/authSlice';
 
 const store = configureStore({
     reducer: {

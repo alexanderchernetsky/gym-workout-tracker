@@ -5,8 +5,9 @@
 
 .formWrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .form {
@@ -22,4 +23,11 @@
 
 .field {
     margin-bottom: 20px !important;
+}
+
+.signUpLink {
+    text-align: center;
+    color: #1976d2;
+    font-weight: bold;
+    cursor: pointer;
 }

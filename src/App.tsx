@@ -1,8 +1,7 @@
 import React from 'react';
-import {Route, BrowserRouter, Routes, useNavigate, Navigate} from 'react-router-dom';
+import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import 'moment/locale/en-gb';
-
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 
@@ -13,7 +12,8 @@ import ExercisePage from './features/ExercisePage';
 import Exercises from './features/Exercises';
 import ProgressPage from './features/progress';
 import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
-import LoginForm from './features/login';
+import LoginForm from './features/auth';
+import RegisterForm from './features/auth/RegisterPage';
 import {RootState} from './store';
 import NotFound from './pages/NotFound';
 import {AppRoutes} from './constants/routes';
@@ -44,7 +44,10 @@ function App() {
             <BrowserRouter>
                 <div className={styles.app}>
                     <Routes>
+                        {/*Public routes*/}
                         <Route path={AppRoutes.LOGIN} element={<LoginForm />} />
+                        <Route path={AppRoutes.REGISTER} element={<RegisterForm />} />
+                        {/*Private routes*/}
                         <Route
                             path={AppRoutes.HOME}
                             element={
@@ -101,6 +104,7 @@ function App() {
                                 </RequireAuth>
                             }
                         />
+                        {/*Not found*/}
                         <Route path={AppRoutes.NOT_FOUND} element={<NotFound />} />
                         <Route path="*" element={<Navigate to={AppRoutes.NOT_FOUND} />} />
                     </Routes>
