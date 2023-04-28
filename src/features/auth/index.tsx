@@ -11,19 +11,13 @@ import {loginUser} from './authSlice';
 import {AppDispatch, RootState} from '../../store';
 import {AppRoutes} from '../../constants/routes';
 import {LoadingStateType} from '../progress/progressSlice';
+import {emailFieldValidationRules, passwordFieldValidationRules} from './validationRules';
 
 import styles from './styles.module.scss';
 
-type LoginInputs = {
+export type LoginInputs = {
     email: string;
     password: string;
-};
-
-const emailFieldValidationRules = {required: true, pattern: {value: /^\S+@\S+$/i, message: 'Invalid email address'}};
-const passwordFieldValidationRules = {
-    required: true,
-    minLength: {value: 5, message: 'Password must have at least 5 characters'},
-    maxLength: {value: 30, message: 'Password must have maximum 30 characters'}
 };
 
 const LoginForm = () => {
@@ -64,7 +58,7 @@ const LoginForm = () => {
 
     return (
         <React.Fragment>
-            <Typography variant="h3" component="h3" className={styles.heading}>
+            <Typography variant="h4" component="h3" className={styles.heading}>
                 GYM
             </Typography>
             <div className={styles.formWrapper}>

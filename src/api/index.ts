@@ -1,9 +1,37 @@
 import {progressItems} from '../mock-data/progressItems';
-import {ICredentials, IUserInfo} from '../features/auth/authSlice';
+import {IUserInfo} from '../features/auth/authSlice';
 import {IProgressItem} from '../features/progress/progressSlice';
+import {LoginInputs} from '../features/auth';
+import {RegisterFormInputs} from '../features/auth/RegisterPage';
 
 // todo: replace with real API calls using axios/RTK Query, add error handling
 const api = {
+    login: (credentials: LoginInputs): Promise<{success: boolean; user: IUserInfo}> => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    success: true,
+                    user: {
+                        name: 'Alex',
+                        id: '12345-678910'
+                    }
+                });
+                // reject();
+            }, 2000);
+        });
+    },
+
+    register: (data: RegisterFormInputs) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    success: true
+                });
+                // reject();
+            }, 2000);
+        });
+    },
+
     fetchProgressItems: () => {
         return new Promise((resolve, reject) => {
             const existingItems: IProgressItem[] | null = JSON.parse(localStorage.getItem('progressItems'));
@@ -39,21 +67,6 @@ const api = {
                 resolve({
                     success: true,
                     data
-                });
-                // reject();
-            }, 2000);
-        });
-    },
-
-    login: (credentials: ICredentials): Promise<{success: boolean; user: IUserInfo}> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({
-                    success: true,
-                    user: {
-                        name: 'Alex',
-                        id: '12345-678910'
-                    }
                 });
                 // reject();
             }, 2000);

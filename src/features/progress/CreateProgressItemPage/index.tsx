@@ -144,7 +144,7 @@ const CreateProgressItemPage = () => {
                     date: fields.date.format() // "2014-09-08T08:02:17-05:00" (ISO 8601, no fractional seconds)
                 })
             );
-
+            // todo: re-write using unwrap()
             if (addNewProgressItem.fulfilled.match(result)) {
                 navigate(AppRoutes.PROGRESS_PAGE);
             } else {
