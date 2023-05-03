@@ -12,7 +12,7 @@ import ExercisePage from './features/ExercisePage';
 import Exercises from './features/Exercises';
 import ProgressPage from './features/progress';
 import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
-import LoginForm from './features/auth';
+import LoginPage from './features/auth/LoginPage';
 import RegisterForm from './features/auth/RegisterPage';
 import {RootState} from './store';
 import NotFound from './pages/NotFound';
@@ -35,7 +35,7 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
 
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn) || Boolean(user);
 
-    return <React.Fragment>{isLoggedIn ? children : <LoginForm />}</React.Fragment>;
+    return <React.Fragment>{isLoggedIn ? children : <LoginPage />}</React.Fragment>;
 };
 
 function App() {
@@ -45,7 +45,7 @@ function App() {
                 <div className={styles.app}>
                     <Routes>
                         {/*Public routes*/}
-                        <Route path={AppRoutes.LOGIN} element={<LoginForm />} />
+                        <Route path={AppRoutes.LOGIN} element={<LoginPage />} />
                         <Route path={AppRoutes.REGISTER} element={<RegisterForm />} />
                         {/*Private routes*/}
                         <Route

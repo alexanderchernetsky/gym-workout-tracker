@@ -1,7 +1,7 @@
 import {progressItems} from '../mock-data/progressItems';
 import {IUserInfo} from '../features/auth/authSlice';
 import {IProgressItem} from '../features/progress/progressSlice';
-import {LoginInputs} from '../features/auth';
+import {LoginInputs} from '../features/auth/LoginPage';
 import {RegisterFormInputs} from '../features/auth/RegisterPage';
 
 // todo: replace with real API calls using axios/RTK Query, add error handling

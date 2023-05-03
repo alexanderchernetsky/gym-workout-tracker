@@ -7,20 +7,20 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
-import {loginUser} from './authSlice';
-import {AppDispatch, RootState} from '../../store';
-import {AppRoutes} from '../../constants/routes';
-import {LoadingStateType} from '../progress/progressSlice';
-import {emailFieldValidationRules, passwordFieldValidationRules} from './validationRules';
+import {loginUser} from '../authSlice';
+import {AppDispatch, RootState} from '../../../store';
+import {AppRoutes} from '../../../constants/routes';
+import {LoadingStateType} from '../../progress/progressSlice';
+import {emailFieldValidationRules, passwordFieldValidationRules} from '../validationRules';
 
-import styles from './styles.module.scss';
+import styles from '../styles.module.scss';
 
 export type LoginInputs = {
     email: string;
     password: string;
 };
 
-const LoginForm = () => {
+const LoginPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const loadingState = useSelector((state: RootState) => state.auth.loadingState);
@@ -114,4 +114,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default LoginPage;

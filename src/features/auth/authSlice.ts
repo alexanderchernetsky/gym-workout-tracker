@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import api from '../../api';
 import {LoadingStateType} from '../progress/progressSlice';
 import {RegisterFormInputs} from './RegisterPage';
-import {LoginInputs} from './index';
+import {LoginInputs} from './LoginPage';
 
 export interface IUserInfo {
     // todo: what other info a user should contain?

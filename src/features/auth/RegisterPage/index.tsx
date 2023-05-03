@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import {Snackbar} from '@mui/material';
 
 import {LoadingStateType} from '../../progress/progressSlice';
 import {AppDispatch, RootState} from '../../../store';
@@ -14,7 +15,6 @@ import {registerUser} from '../authSlice';
 import {AppRoutes} from '../../../constants/routes';
 
 import styles from '../styles.module.scss';
-import {Snackbar} from '@mui/material';
 
 export type RegisterFormInputs = {
     username: string;
@@ -43,8 +43,6 @@ const RegisterPage = () => {
     } = methods;
 
     const onSubmit: SubmitHandler<RegisterFormInputs> = async fields => {
-        // todo: check that fields are not empty strings
-        // todo: check email validation rule, incorrect email alex@test passed validation!
         if (isValid) {
             await dispatch(registerUser(fields)).unwrap();
 
