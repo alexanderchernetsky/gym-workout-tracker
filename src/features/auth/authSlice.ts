@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import api from '../../api';
+import api from '../../mock-api';
 import {LoadingStateType} from '../progress/progressSlice';
 import {RegisterFormInputs} from './RegisterPage';
 import {LoginInputs} from './LoginPage';

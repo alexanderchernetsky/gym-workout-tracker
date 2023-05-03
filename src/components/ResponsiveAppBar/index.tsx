@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,7 @@ import Avatar from '@mui/material/Avatar';
 
 import {AppRoutes} from '../../constants/routes';
 import {logOut} from '../../features/auth/authSlice';
+import {RootState} from '../../store';
 
 const appBarNavigationItems = [
     {
@@ -26,10 +27,12 @@ const appBarNavigationItems = [
     {
         name: 'Progress',
         route: AppRoutes.PROGRESS_PAGE
+    },
+    {
+        name: 'Exercises',
+        route: AppRoutes.EXERCISES_LIST
     }
 ];
-
-const appBarSettings = ['Profile'];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -37,6 +40,7 @@ function ResponsiveAppBar() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userName = useSelector((state: RootState) => state.auth?.user?.name);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -68,6 +72,7 @@ function ResponsiveAppBar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <FitnessCenterIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
+                    {/* todo: should redirect to the home page on click */}
                     <Typography
                         variant="h6"
                         noWrap
@@ -152,8 +157,7 @@ function ResponsiveAppBar() {
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                {/* todo: add src to a real avatar image*/}
-                                <Avatar alt="Alex Chernetsky" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={userName} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -172,11 +176,6 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {appBarSettings.map(setting => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
                             <MenuItem key="log-out" onClick={handleLogOut}>
                                 <Typography textAlign="center">Log out</Typography>
                             </MenuItem>

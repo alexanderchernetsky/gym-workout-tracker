@@ -5,23 +5,13 @@
     align-items: center;
 }
 
-.pageName {
-    padding: 0 20px;
-    text-align: center;
-}
-
-.muscles {
-    text-align: center;
-    margin-top: 0;
-    text-transform: capitalize;
-}
-
 .exerciseName {
     text-transform: capitalize;
     list-style: none;
     color: #1a2027;
 }
 
-.button {
-    margin: 20px !important;
+.list {
+    width: 100%;
+    max-width: 360px;
 }

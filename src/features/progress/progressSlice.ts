@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-import api from '../../api';
+import api from '../../mock-api';
 
 enum ProgressPageActions {
     GET_PROGRESS_ITEMS = 'PROGRESS/GET_PROGRESS_ITEMS',

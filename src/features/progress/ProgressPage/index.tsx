@@ -11,14 +11,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
 
-import photo from '../../images/arnold_physcial_shape.jpeg';
-import {PageWithResponsiveAppBar} from '../../components/ResponsiveAppBar';
-import {AppRoutes} from '../../constants/routes';
-import {deleteProgressItem, getProgressItems, LoadingStateType} from './progressSlice';
-import {AppDispatch, RootState} from '../../store';
-import Error from '../../components/Error';
-import Loading from '../../components/Loading';
-import sortProgressItemsByDate from './sortProgressItemsByDate';
+import photo from '../../../images/arnold_physcial_shape.jpeg';
+import {PageWithResponsiveAppBar} from '../../../components/ResponsiveAppBar';
+import {AppRoutes} from '../../../constants/routes';
+import {deleteProgressItem, getProgressItems, LoadingStateType} from '../progressSlice';
+import {AppDispatch, RootState} from '../../../store';
+import Error from '../../../components/Error';
+import Loading from '../../../components/Loading';
+import sortProgressItemsByDate from '../sortProgressItemsByDate';
 
 import styles from './styles.module.scss';
 

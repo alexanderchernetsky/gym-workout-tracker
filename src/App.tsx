@@ -5,12 +5,9 @@ import 'moment/locale/en-gb';
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 
-import Home from './features/Home';
-import SplitWorkouts from './features/SplitWorkouts';
-import WorkoutPage from './features/WorkoutPage';
-import ExercisePage from './features/ExercisePage';
-import Exercises from './features/Exercises';
-import ProgressPage from './features/progress';
+import HomePage from './features/workout/HomePage';
+import Exercises from './features/exercises/ExercisesPage';
+import ProgressPage from './features/progress/ProgressPage';
 import CreateProgressItemPage from './features/progress/CreateProgressItemPage';
 import LoginPage from './features/auth/LoginPage';
 import RegisterForm from './features/auth/RegisterPage';
@@ -52,7 +49,7 @@ function App() {
                             path={AppRoutes.HOME}
                             element={
                                 <RequireAuth>
-                                    <Home />
+                                    <HomePage />
                                 </RequireAuth>
                             }
                         />
@@ -73,34 +70,10 @@ function App() {
                             }
                         />
                         <Route
-                            path={AppRoutes.SPLIT_WORKOUTS_LIST}
-                            element={
-                                <RequireAuth>
-                                    <SplitWorkouts />
-                                </RequireAuth>
-                            }
-                        />
-                        <Route
-                            path={AppRoutes.SPLIT_WORKOUT}
-                            element={
-                                <RequireAuth>
-                                    <WorkoutPage />
-                                </RequireAuth>
-                            }
-                        />
-                        <Route
                             path={AppRoutes.EXERCISES_LIST}
                             element={
                                 <RequireAuth>
                                     <Exercises />
-                                </RequireAuth>
-                            }
-                        />
-                        <Route
-                            path={AppRoutes.EXERCISE}
-                            element={
-                                <RequireAuth>
-                                    <ExercisePage />
                                 </RequireAuth>
                             }
                         />
