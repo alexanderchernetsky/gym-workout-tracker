@@ -1,0 +1,44 @@
+.homePageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    min-height: 100vh;
+    padding: 0 15px;
+}
+
+.pageTitle {
+    font-size: 28px;
+    margin-right: auto;
+}
+
+.pageSecondaryTitle {
+    margin: 0 auto 10px 0;
+}
+
+.button {
+    width: 100%;
+}
+
+.templates {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.newTemplateButton {
+    height: 30px;
+}
+
+.myTemplatesWrapper {
+    width: 100%;
+    // todo: replace this with css grid flexible styles
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
