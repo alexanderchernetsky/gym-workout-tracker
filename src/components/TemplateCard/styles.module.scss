@@ -1,5 +1,28 @@
+.templateName {
+    margin: 0;
+}
+
 .card {
-    // todo: replace this with css grid flexible styles
-    width: 150px;
-    height: 150px;
+    height: 160px;
+}
+
+.cardContent {
+    max-height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 16px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.templateHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.exercisesList {
+    overflow: hidden;
+    font-size: 14px;
+    color: gray;
 }

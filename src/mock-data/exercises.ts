@@ -39,13 +39,13 @@ export const exercises: Exercise[] = [
     {
         id: 6,
         name: 'leg press',
-        muscleTypes: 'quads',
+        muscleTypes: 'quadriceps',
         image: ''
     },
     {
         id: 7,
         name: 'walking lunges with barbell',
-        muscleTypes: 'quads, glutes, hamstrings',
+        muscleTypes: 'quadriceps, glutes, hamstrings',
         image: ''
     },
     {

@@ -5,7 +5,7 @@
     align-items: center;
     background-color: white;
     min-height: 100vh;
-    padding: 0 15px;
+    padding: 0 15px 25px 15px;
 }
 
 .pageTitle {
@@ -14,7 +14,7 @@
 }
 
 .pageSecondaryTitle {
-    margin: 0 auto 10px 0;
+    margin: 10px auto 10px 0;
 }
 
 .button {
@@ -37,8 +37,8 @@
 
 .myTemplatesWrapper {
     width: 100%;
-    // todo: replace this with css grid flexible styles
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
 }
