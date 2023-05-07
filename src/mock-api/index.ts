@@ -1,26 +1,9 @@
 import {progressItems} from '../mock-data/progressItems';
-import {IUserInfo} from '../features/auth/authSlice';
 import {IProgressItem} from '../features/progress/progressSlice';
-import {LoginInputs} from '../features/auth/LoginPage';
 import {RegisterFormInputs} from '../features/auth/RegisterPage';
 
-// todo: replace with real API calls using axios/RTK Query, add error handling
+// todo: replace with real API calls using RTK Query
 const api = {
-    login: (credentials: LoginInputs): Promise<{success: boolean; user: IUserInfo}> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({
-                    success: true,
-                    user: {
-                        name: 'Alex',
-                        id: '12345-678910'
-                    }
-                });
-                // reject();
-            }, 2000);
-        });
-    },
-
     register: (data: RegisterFormInputs) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {

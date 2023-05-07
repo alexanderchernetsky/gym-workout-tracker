@@ -1,12 +1,10 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import api from '../../mock-api';
 import {LoadingStateType} from '../progress/progressSlice';
 import {RegisterFormInputs} from './RegisterPage';
-import {LoginInputs} from './LoginPage';
 
 export interface IUserInfo {
-    // todo: what other info a user should contain?
     name: string;
     id: string;
 }
@@ -30,13 +28,6 @@ enum AuthActions {
 }
 
 // todo: re-write the below using RTK Query
-
-export const loginUser = createAsyncThunk(AuthActions.LOG_IN, async (credentials: LoginInputs) => {
-    const response = await api.login(credentials);
-
-    return response.user;
-});
-
 export const registerUser = createAsyncThunk(AuthActions.REGISTER, async (registerFormData: RegisterFormInputs) => {
     const response = await api.register(registerFormData);
 
@@ -48,6 +39,16 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        login: (state, action) => {
+            localStorage.setItem('user', JSON.stringify(action.payload));
+
+            return {
+                ...state,
+                isLoggedIn: true,
+                user: action.payload
+            };
+        },
+
         logOut: state => {
             localStorage.removeItem('user');
 
@@ -60,29 +61,6 @@ const authSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(loginUser.pending, () => {
-                return {
-                    isLoggedIn: false,
-                    user: null,
-                    loadingState: LoadingStateType.Loading
-                };
-            })
-            .addCase(loginUser.fulfilled, (state: IAuthState, action: PayloadAction<IUserInfo>) => {
-                localStorage.setItem('user', JSON.stringify(action.payload));
-
-                return {
-                    isLoggedIn: true,
-                    user: action.payload,
-                    loadingState: LoadingStateType.Success
-                };
-            })
-            .addCase(loginUser.rejected, () => {
-                return {
-                    isLoggedIn: false,
-                    user: null,
-                    loadingState: LoadingStateType.Error
-                };
-            })
             .addCase(registerUser.pending, state => {
                 return {
                     ...state,
@@ -105,6 +83,6 @@ const authSlice = createSlice({
 });
 
 // Extract and export each action creator by name
-export const {logOut} = authSlice.actions;
+export const {login, logOut} = authSlice.actions;
 
 export default authSlice.reducer;

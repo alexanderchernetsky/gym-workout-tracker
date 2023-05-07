@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
-import {loginUser} from '../authSlice';
-import {AppDispatch, RootState} from '../../../store';
+import {login} from '../authSlice';
+import {AppDispatch} from '../../../store';
 import {AppRoutes} from '../../../constants/routes';
-import {LoadingStateType} from '../../progress/progressSlice';
 import {emailFieldValidationRules, passwordFieldValidationRules} from '../validationRules';
+import {SHARED_LOGIN_KEY, useLoginMutation} from '../../../services';
 
 import styles from '../styles.module.scss';
 
@@ -20,17 +20,20 @@ export type LoginInputs = {
     password: string;
 };
 
+const loginFormDefaultValues: LoginInputs = {
+    email: '',
+    password: ''
+};
+
 const LoginPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const loadingState = useSelector((state: RootState) => state.auth.loadingState);
-    const user = useSelector((state: RootState) => state.auth.user);
+    const [loginUser, {data, isError, isLoading}] = useLoginMutation({
+        fixedCacheKey: SHARED_LOGIN_KEY
+    });
 
     const methods = useForm<LoginInputs>({
-        defaultValues: {
-            email: '',
-            password: ''
-        }
+        defaultValues: loginFormDefaultValues
     });
 
     const {
@@ -38,19 +41,18 @@ const LoginPage = () => {
         formState: {isValid}
     } = methods;
 
-    const onSubmit: SubmitHandler<LoginInputs> = fields => {
+    const onSubmit: SubmitHandler<LoginInputs> = async fields => {
         if (isValid) {
-            dispatch(loginUser(fields));
+            const data = await loginUser(fields).unwrap();
+            dispatch(login(data.user));
         }
     };
 
-    const isError = loadingState === LoadingStateType.Error;
-
     useEffect(() => {
-        if (user) {
+        if (data?.user?.id) {
             navigate(AppRoutes.HOME);
         }
-    }, [user, navigate]);
+    }, [data, navigate]);
 
     const onSignUpLinkClick = () => {
         navigate(AppRoutes.REGISTER);
@@ -62,6 +64,7 @@ const LoginPage = () => {
                 GYM
             </Typography>
             <div className={styles.formWrapper}>
+                {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
                         <Controller
@@ -97,7 +100,7 @@ const LoginPage = () => {
                                 />
                             )}
                         />
-                        <Button variant="contained" type="submit" disabled={loadingState === LoadingStateType.Loading}>
+                        <Button variant="contained" type="submit" disabled={isLoading}>
                             Login
                         </Button>
                     </FormProvider>
@@ -108,7 +111,6 @@ const LoginPage = () => {
                         Sign Up!
                     </div>
                 </div>
-                {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
             </div>
         </React.Fragment>
     );

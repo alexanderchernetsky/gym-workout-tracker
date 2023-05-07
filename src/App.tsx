@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import 'moment/locale/en-gb';
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
@@ -14,6 +14,7 @@ import RegisterForm from './features/auth/RegisterPage';
 import {RootState} from './store';
 import NotFound from './pages/NotFound';
 import {AppRoutes} from './constants/routes';
+import {login} from './features/auth/authSlice';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -27,8 +28,16 @@ interface IRequireAuthProps {
 }
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({children}) => {
+    const dispatch = useDispatch();
     // to not lose login state after page refresh
     const user = localStorage.getItem('user');
+
+    const userFromReduxStore = useSelector((state: RootState) => state.auth.user);
+
+    if (user && !userFromReduxStore) {
+        // re-hydrate redux store
+        dispatch(login(JSON.parse(user)));
+    }
 
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn) || Boolean(user);
 

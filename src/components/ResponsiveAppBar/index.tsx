@@ -19,6 +19,8 @@ import {AppRoutes} from '../../constants/routes';
 import {logOut} from '../../features/auth/authSlice';
 import {RootState} from '../../store';
 
+import styles from './styles.module.scss';
+
 const appBarNavigationItems = [
     {
         name: 'Workouts',
@@ -67,25 +69,26 @@ function ResponsiveAppBar() {
         navigate(AppRoutes.LOGIN);
     };
 
+    const onAppLogoClick = () => {
+        navigate(AppRoutes.HOME);
+    };
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+                    {/* Desktop */}
                     <FitnessCenterIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
-                    {/* todo: should redirect to the home page on click */}
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="/"
+                        component="div"
+                        onClick={onAppLogoClick}
+                        className={styles.appLogo}
                         sx={{
                             mr: 2,
                             display: {xs: 'none', md: 'flex'},
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none'
+                            fontFamily: 'monospace'
                         }}
                     >
                         GYM
@@ -127,21 +130,19 @@ function ResponsiveAppBar() {
                             ))}
                         </Menu>
                     </Box>
+                    {/* Mobile */}
                     <FitnessCenterIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}} />
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
-                        href=""
+                        component="div"
+                        className={styles.appLogo}
+                        onClick={onAppLogoClick}
                         sx={{
                             mr: 2,
                             display: {xs: 'flex', md: 'none'},
                             flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none'
+                            fontFamily: 'monospace'
                         }}
                     >
                         GYM
@@ -153,7 +154,7 @@ function ResponsiveAppBar() {
                             </Button>
                         ))}
                     </Box>
-
+                    {/* User Avatar and Log Out */}
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
