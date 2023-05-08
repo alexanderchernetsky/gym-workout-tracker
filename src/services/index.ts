@@ -3,8 +3,9 @@ import {LoginInputs} from '../features/auth/LoginPage';
 import {IUserInfo} from '../features/auth/authSlice';
 import {RegisterFormInputs} from '../features/auth/RegisterPage';
 
-const gymWorkoutTrackerApiUrl = 'http://localhost:3001';
+const gymWorkoutTrackerApiUrl = process.env.REACT_APP_API;
 // 'http://localhost:3001'
+// process.env.REACT_APP_API
 
 type LoginResponse = {success: boolean; user: IUserInfo};
 
