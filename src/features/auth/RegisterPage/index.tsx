@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -8,11 +8,10 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import {Snackbar} from '@mui/material';
 
-import {LoadingStateType} from '../../progress/progressSlice';
-import {AppDispatch, RootState} from '../../../store';
+import {RootState} from '../../../store';
 import {emailFieldValidationRules, passwordFieldValidationRules, userNameValidationRules} from '../validationRules';
-import {registerUser} from '../authSlice';
 import {AppRoutes} from '../../../constants/routes';
+import {useRegisterMutation} from '../../../services';
 
 import styles from '../styles.module.scss';
 
@@ -23,11 +22,10 @@ export type RegisterFormInputs = {
 };
 
 const RegisterPage = () => {
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const loadingState = useSelector((state: RootState) => state.auth.loadingState);
     const user = useSelector((state: RootState) => state.auth.user);
     const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
+    const [registerUser, {isError, isLoading}] = useRegisterMutation();
 
     const methods = useForm<RegisterFormInputs>({
         defaultValues: {
@@ -44,17 +42,15 @@ const RegisterPage = () => {
 
     const onSubmit: SubmitHandler<RegisterFormInputs> = async fields => {
         if (isValid) {
-            await dispatch(registerUser(fields)).unwrap();
+            await registerUser(fields).unwrap();
 
             setIsSnackBarOpen(true);
 
             setTimeout(() => {
                 navigate(AppRoutes.LOGIN);
-            }, 500);
+            }, 1000);
         }
     };
-
-    const isError = loadingState === LoadingStateType.Error;
 
     useEffect(() => {
         if (user) {
@@ -65,8 +61,6 @@ const RegisterPage = () => {
     const onBackToLoginLinkClick = () => {
         navigate(AppRoutes.LOGIN);
     };
-
-    const isRegisterButtonDisabled = loadingState === LoadingStateType.Loading;
 
     return (
         <React.Fragment>
@@ -79,6 +73,7 @@ const RegisterPage = () => {
                 Registration
             </Typography>
             <div className={styles.formWrapper}>
+                {isError && <Alert severity="error">The error has happened. Please try to register again.</Alert>}
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
                         <Controller
@@ -130,7 +125,7 @@ const RegisterPage = () => {
                                 />
                             )}
                         />
-                        <Button variant="contained" type="submit" disabled={isRegisterButtonDisabled}>
+                        <Button variant="contained" type="submit" disabled={isLoading}>
                             Register
                         </Button>
                     </FormProvider>
@@ -141,7 +136,6 @@ const RegisterPage = () => {
                         Back to the Login page
                     </div>
                 </div>
-                {isError && <Alert severity="error">The error has happened. Please try to register again.</Alert>}
             </div>
         </React.Fragment>
     );

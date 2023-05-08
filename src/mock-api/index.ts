@@ -1,20 +1,8 @@
 import {progressItems} from '../mock-data/progressItems';
 import {IProgressItem} from '../features/progress/progressSlice';
-import {RegisterFormInputs} from '../features/auth/RegisterPage';
 
 // todo: replace with real API calls using RTK Query
 const api = {
-    register: (data: RegisterFormInputs) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({
-                    success: true
-                });
-                // reject();
-            }, 2000);
-        });
-    },
-
     fetchProgressItems: () => {
         return new Promise((resolve, reject) => {
             const existingItems: IProgressItem[] | null = JSON.parse(localStorage.getItem('progressItems'));
