@@ -5,9 +5,12 @@ import {IUserInfo} from '../features/auth/authSlice';
 type LoginResponse = {success: boolean; user: IUserInfo};
 export const SHARED_LOGIN_KEY = 'shared-login';
 
+const gymWorkoutTrackerApiUrl = process.env.REACT_APP_API;
+// 'http://localhost:3001'
+
 export const gymWorkoutTrackerApi = createApi({
     reducerPath: 'gymWorkoutTrackerApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3001'}),
+    baseQuery: fetchBaseQuery({baseUrl: gymWorkoutTrackerApiUrl}),
     endpoints: builder => ({
         login: builder.mutation<LoginResponse, LoginInputs>({
             query: body => ({
