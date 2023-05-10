@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {LoginInputs} from '../features/auth/LoginPage';
 import {IUserInfo} from '../features/auth/authSlice';
 import {RegisterFormInputs} from '../features/auth/RegisterPage';
+import {IProgressItem} from '../features/progress/progressSlice';
 
 const gymWorkoutTrackerApiUrl = process.env.REACT_APP_API;
 // 'http://localhost:3001'
@@ -17,11 +18,13 @@ type RegisterResponse = {
 
 enum API_ROUTES {
     LOGIN = 'login',
-    REGISTER = 'register'
+    REGISTER = 'register',
+    PROGRESS_ENTRIES = 'progress-entries'
 }
 
 enum HTTP_METHODS {
-    POST = 'POST'
+    POST = 'POST',
+    GET = 'GET'
 }
 
 export const gymWorkoutTrackerApi = createApi({
@@ -42,8 +45,16 @@ export const gymWorkoutTrackerApi = createApi({
                 method: HTTP_METHODS.POST,
                 body
             })
+        }),
+
+        fetchProgressEntries: builder.query<IProgressItem[], void>({
+            query: () => ({
+                url: API_ROUTES.PROGRESS_ENTRIES,
+                method: HTTP_METHODS.GET
+            }),
+            transformResponse: (response: {data: IProgressItem[]}) => response.data
         })
     })
 });
 
-export const {useLoginMutation, useRegisterMutation} = gymWorkoutTrackerApi;
+export const {useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery} = gymWorkoutTrackerApi;

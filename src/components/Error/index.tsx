@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import styles from './styles.module.scss';
 
@@ -12,7 +13,10 @@ const Error: React.FC<IErrorProps> = ({isError, children}) => {
         <React.Fragment>
             {isError ? (
                 <div>
-                    <div className={styles.errorMessage}>Something went wrong.</div>
+                    <div className={styles.errorMessage}>
+                        <ErrorOutlineIcon color="error" />
+                        &nbsp; Something went wrong.
+                    </div>
                 </div>
             ) : (
                 children

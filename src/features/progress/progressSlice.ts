@@ -8,12 +8,6 @@ enum ProgressPageActions {
     ADD_NEW_PROGRESS_ITEM = 'PROGRESS/ADD_NEW_PROGRESS_ITEM'
 }
 
-export const getProgressItems = createAsyncThunk(ProgressPageActions.GET_PROGRESS_ITEMS, async () => {
-    const response = await api.fetchProgressItems();
-
-    return response;
-});
-
 export const deleteProgressItem = createAsyncThunk(ProgressPageActions.DELETE_PROGRESS_ITEM, async (id: string) => {
     await api.deleteProgressItem(id);
 
@@ -58,24 +52,6 @@ export const progressSlice = createSlice({
     extraReducers: builder => {
         // GET
         builder
-            .addCase(getProgressItems.fulfilled, (state, action) => {
-                return {
-                    loadingState: LoadingStateType.Success,
-                    progressItems: action.payload as IProgressItem[]
-                };
-            })
-            .addCase(getProgressItems.rejected, (state, action) => {
-                return {
-                    loadingState: LoadingStateType.Error,
-                    progressItems: []
-                };
-            })
-            .addCase(getProgressItems.pending, (state, action) => {
-                return {
-                    loadingState: LoadingStateType.Loading,
-                    progressItems: []
-                };
-            })
             // DELETE
             .addCase(deleteProgressItem.rejected, (state, action) => {
                 return {
