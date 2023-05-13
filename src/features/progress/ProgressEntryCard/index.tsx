@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import photo from '../../../images/arnold_physcial_shape.jpeg';
 import {IProgressItem} from '../progressSlice';
 import {useDeleteProgressEntryMutation} from '../../../services';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 import styles from './styles.module.scss';
 
@@ -20,12 +21,9 @@ interface IProgressEntryCard extends IProgressItem {}
 const ProgressEntryCard: React.FC<IProgressEntryCard> = ({image, date, weight, progressIndicators, id}) => {
     const [deleteProgressEntry, {isError, isLoading}] = useDeleteProgressEntryMutation();
     const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
+    const [isConfirmOpen, setConfirmOpen] = React.useState(false);
 
-    const onDeleteBtnClick = (id: string) => {
-        deleteProgressEntry(id);
-    };
-
-    const onEditProgressEntryClick = (id: string) => {
+    const onEditProgressEntryClick = () => {
         // todo
         window.alert('To be continued...');
     };
@@ -40,37 +38,61 @@ const ProgressEntryCard: React.FC<IProgressEntryCard> = ({image, date, weight, p
         }
     }, [isError]);
 
+    const onDeleteBtnClick = () => {
+        setConfirmOpen(true);
+    };
+
+    const handleDeleteConfirmed = async () => {
+        await deleteProgressEntry(id).unwrap();
+
+        setConfirmOpen(false);
+    };
+
+    const handleClose = () => {
+        setConfirmOpen(false);
+    };
+
     return (
-        <Card className={styles.progressItemCard}>
-            {/*todo: create a re-usable SnackBar component (also used on Register page) */}
-            <Snackbar open={isSnackBarOpen} onClose={closeSnackBar} autoHideDuration={3000} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-                <Alert severity="error" sx={{width: '100%'}}>
-                    Delete failed!
-                </Alert>
-            </Snackbar>
-            <div className={styles.imageWrapper}>
-                <img src={image || photo} alt="physical shape" />
-            </div>
-            <CardContent>
-                <Typography color="text.secondary" gutterBottom className={styles.date}>
-                    {/* todo: transform date to sth readable */}
-                    {date}
-                </Typography>
-                <Typography sx={{mb: 1.5}} color="text.secondary">
-                    Weight: {weight}
-                </Typography>
-                <Typography variant="body2">{progressIndicators}</Typography>
-                <Stack direction="row" spacing={2} className={styles.buttonWrapper}>
-                    {/* todo: handle edit */}
-                    <Button variant="contained" endIcon={<EditIcon />} onClick={() => onEditProgressEntryClick(id)} disabled={isLoading}>
-                        Edit
-                    </Button>
-                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => onDeleteBtnClick(id)} disabled={isLoading}>
-                        Delete
-                    </Button>
-                </Stack>
-            </CardContent>
-        </Card>
+        <React.Fragment>
+            {isConfirmOpen ? (
+                <ConfirmDialog
+                    dialogTitle="Are you sure?"
+                    dialogContent="Do you want to delete progress entry?"
+                    handleConfirm={handleDeleteConfirmed}
+                    handleClose={handleClose}
+                />
+            ) : null}
+            <Card className={styles.progressItemCard}>
+                {/*todo: create a re-usable SnackBar component (also used on Register page) */}
+                <Snackbar open={isSnackBarOpen} onClose={closeSnackBar} autoHideDuration={3000} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                    <Alert severity="error" sx={{width: '100%'}}>
+                        Delete failed!
+                    </Alert>
+                </Snackbar>
+                <div className={styles.imageWrapper}>
+                    <img src={image || photo} alt="physical shape" />
+                </div>
+                <CardContent>
+                    <Typography color="text.secondary" gutterBottom className={styles.date}>
+                        {/* todo: transform date to sth readable */}
+                        {date}
+                    </Typography>
+                    <Typography sx={{mb: 1.5}} color="text.secondary">
+                        Weight: {weight}
+                    </Typography>
+                    <Typography variant="body2">{progressIndicators}</Typography>
+                    <Stack direction="row" spacing={2} className={styles.buttonWrapper}>
+                        {/* todo: handle edit */}
+                        <Button variant="contained" endIcon={<EditIcon />} onClick={onEditProgressEntryClick} disabled={isLoading}>
+                            Edit
+                        </Button>
+                        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={onDeleteBtnClick} disabled={isLoading}>
+                            Delete
+                        </Button>
+                    </Stack>
+                </CardContent>
+            </Card>
+        </React.Fragment>
     );
 };
 

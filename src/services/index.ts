@@ -33,9 +33,14 @@ enum HTTP_METHODS {
     DELETE = 'DELETE'
 }
 
+enum Tags {
+    PROGRESS_ITEMS = 'PROGRESS_ITEMS'
+}
+
 export const gymWorkoutTrackerApi = createApi({
     reducerPath: 'gymWorkoutTrackerApi',
     baseQuery: fetchBaseQuery({baseUrl: gymWorkoutTrackerApiUrl}),
+    tagTypes: [Tags.PROGRESS_ITEMS],
     endpoints: builder => ({
         login: builder.mutation<LoginResponse, LoginInputs>({
             query: body => ({
@@ -58,14 +63,16 @@ export const gymWorkoutTrackerApi = createApi({
                 url: API_ROUTES.PROGRESS_ENTRIES,
                 method: HTTP_METHODS.GET
             }),
-            transformResponse: (response: {data: IProgressItem[]}) => response.data
+            transformResponse: (response: {data: IProgressItem[]}) => response.data,
+            providesTags: [Tags.PROGRESS_ITEMS]
         }),
 
         deleteProgressEntry: builder.mutation<IDeleteProgressEntryResponse, string>({
-            query: () => ({
-                url: API_ROUTES.PROGRESS_ENTRY,
+            query: id => ({
+                url: `${API_ROUTES.PROGRESS_ENTRY}/${id}`,
                 method: HTTP_METHODS.DELETE
-            })
+            }),
+            invalidatesTags: [Tags.PROGRESS_ITEMS]
         })
     })
 });

@@ -140,7 +140,7 @@ const CreateProgressItemPage = () => {
                     weight: fields.weight,
                     progressIndicators: fields.progressIndicators,
                     image: base64img as string,
-                    id: uuid(),
+                    id: uuid().slice(0, 8),
                     date: fields.date.format() // "2014-09-08T08:02:17-05:00" (ISO 8601, no fractional seconds)
                 })
             );
