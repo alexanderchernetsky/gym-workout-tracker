@@ -13,6 +13,7 @@ export interface IWorkoutTemplate {
     exercises: Exercise[];
 }
 
+// todo: fetch templates from the API
 const mockTemplates: IWorkoutTemplate[] = [
     {
         id: 1,
@@ -35,10 +36,12 @@ const mockTemplates: IWorkoutTemplate[] = [
 
 const Home = () => {
     const onStartEmptyWorkoutClick = () => {
+        // todo: navigate to create new workout page
         window.alert('To be continued...');
     };
 
     const onAddTemplateClick = () => {
+        // todo: navigate to create new template page
         window.alert('To be continued...');
     };
 

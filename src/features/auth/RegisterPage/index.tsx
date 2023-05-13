@@ -66,7 +66,7 @@ const RegisterPage = () => {
         <React.Fragment>
             <Snackbar open={isSnackBarOpen} autoHideDuration={5000} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert severity="success" sx={{width: '100%'}}>
-                    This is a success message!
+                    Registered successfully!
                 </Alert>
             </Snackbar>
             <Typography variant="h4" component="h3" className={styles.heading}>

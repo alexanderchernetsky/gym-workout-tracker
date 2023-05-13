@@ -12,19 +12,25 @@ type LoginResponse = {success: boolean; user: IUserInfo};
 
 export const SHARED_LOGIN_KEY = 'shared-login';
 
-type RegisterResponse = {
+interface IApiResponse {
     success: boolean;
-};
+}
+
+interface IRegisterResponse extends IApiResponse {}
+
+interface IDeleteProgressEntryResponse extends IApiResponse {}
 
 enum API_ROUTES {
     LOGIN = 'login',
     REGISTER = 'register',
-    PROGRESS_ENTRIES = 'progress-entries'
+    PROGRESS_ENTRIES = 'progress-entries',
+    PROGRESS_ENTRY = 'progress-entry'
 }
 
 enum HTTP_METHODS {
     POST = 'POST',
-    GET = 'GET'
+    GET = 'GET',
+    DELETE = 'DELETE'
 }
 
 export const gymWorkoutTrackerApi = createApi({
@@ -39,7 +45,7 @@ export const gymWorkoutTrackerApi = createApi({
             })
         }),
 
-        register: builder.mutation<RegisterResponse, RegisterFormInputs>({
+        register: builder.mutation<IRegisterResponse, RegisterFormInputs>({
             query: body => ({
                 url: API_ROUTES.REGISTER,
                 method: HTTP_METHODS.POST,
@@ -53,8 +59,15 @@ export const gymWorkoutTrackerApi = createApi({
                 method: HTTP_METHODS.GET
             }),
             transformResponse: (response: {data: IProgressItem[]}) => response.data
+        }),
+
+        deleteProgressEntry: builder.mutation<IDeleteProgressEntryResponse, string>({
+            query: () => ({
+                url: API_ROUTES.PROGRESS_ENTRY,
+                method: HTTP_METHODS.DELETE
+            })
         })
     })
 });
 
-export const {useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery} = gymWorkoutTrackerApi;
+export const {useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery, useDeleteProgressEntryMutation} = gymWorkoutTrackerApi;

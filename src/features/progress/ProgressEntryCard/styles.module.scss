@@ -1,0 +1,41 @@
+.progressItemCard {
+    max-width: 500px;
+    min-width: 275px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+.date {
+    font-size: 14px;
+}
+
+.indicator {
+    padding-right: 5px;
+    overflow-wrap: break-word;
+}
+
+.indicatorName {
+    text-transform: capitalize;
+}
+
+.indicatorValue {
+    font-weight: 500;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 400px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
