@@ -20,6 +20,8 @@ interface IRegisterResponse extends IApiResponse {}
 
 interface IDeleteProgressEntryResponse extends IApiResponse {}
 
+interface ICreateProgressEntryResponse extends IApiResponse {}
+
 enum API_ROUTES {
     LOGIN = 'login',
     REGISTER = 'register',
@@ -73,8 +75,18 @@ export const gymWorkoutTrackerApi = createApi({
                 method: HTTP_METHODS.DELETE
             }),
             invalidatesTags: [Tags.PROGRESS_ITEMS]
+        }),
+
+        createProgressEntry: builder.mutation<ICreateProgressEntryResponse, IProgressItem>({
+            query: body => ({
+                url: API_ROUTES.PROGRESS_ENTRY,
+                method: HTTP_METHODS.POST,
+                body
+            }),
+            invalidatesTags: [Tags.PROGRESS_ITEMS]
         })
     })
 });
 
-export const {useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery, useDeleteProgressEntryMutation} = gymWorkoutTrackerApi;
+export const {useCreateProgressEntryMutation, useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery, useDeleteProgressEntryMutation} =
+    gymWorkoutTrackerApi;

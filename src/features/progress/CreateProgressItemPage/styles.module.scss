@@ -38,3 +38,27 @@
     width: 100%;
     margin-top: 20px !important;
 }
+
+.imageUploadInput {
+    display: none;
+}
+
+.inputWithError {
+    border: 1px solid #d32f2f !important;
+}
+
+.customFileUpload {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.23); // same color as for mui elements
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageUploadInputText {
+    padding-left: 10px;
+}
