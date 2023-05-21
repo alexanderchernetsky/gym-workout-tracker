@@ -71,6 +71,14 @@ function App() {
                             }
                         />
                         <Route
+                            path={AppRoutes.EDIT_PROGRESS_ITEM_PAGE}
+                            element={
+                                <RequireAuth>
+                                    <CreateProgressItemPage />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
                             path={AppRoutes.CREATE_PROGRESS_ITEM_PAGE}
                             element={
                                 <RequireAuth>

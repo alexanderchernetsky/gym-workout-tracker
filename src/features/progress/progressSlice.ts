@@ -1,10 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-
-import api from '../../mock-api';
-
-enum ProgressPageActions {
-    ADD_NEW_PROGRESS_ITEM = 'PROGRESS/ADD_NEW_PROGRESS_ITEM'
-}
+import {createSlice} from '@reduxjs/toolkit';
 
 export interface IProgressItem {
     id: string;
@@ -13,12 +7,6 @@ export interface IProgressItem {
     progressIndicators: string;
     image: string; // base64
 }
-
-export const addNewProgressItem = createAsyncThunk(ProgressPageActions.ADD_NEW_PROGRESS_ITEM, async (data: IProgressItem) => {
-    const response = await api.addNewProgressItem(data);
-
-    return response.data;
-});
 
 export enum LoadingStateType {
     Idle = 'idle',
@@ -41,28 +29,7 @@ export const progressSlice = createSlice({
     name: 'progress',
     initialState,
     reducers: {},
-    extraReducers: builder => {
-        builder
-            // ADD
-            .addCase(addNewProgressItem.fulfilled, (state, action) => {
-                return {
-                    loadingState: LoadingStateType.Success,
-                    progressItems: [action.payload, ...state.progressItems]
-                };
-            })
-            .addCase(addNewProgressItem.pending, state => {
-                return {
-                    ...state,
-                    loadingState: LoadingStateType.Loading
-                };
-            })
-            .addCase(addNewProgressItem.rejected, state => {
-                return {
-                    ...state,
-                    loadingState: LoadingStateType.Error
-                };
-            });
-    }
+    extraReducers: () => {}
 });
 
 // this is for configureStore

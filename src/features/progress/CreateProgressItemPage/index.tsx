@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import uuid from 'react-uuid';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import classNames from 'classnames';
 import {Moment} from 'moment';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
@@ -16,9 +16,10 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {PageWithResponsiveAppBar} from '../../../components/ResponsiveAppBar';
 import {AppRoutes} from '../../../constants/routes';
 import {dateFieldValidationRules, imageFieldValidationRules, progressIndicatorsFieldValidationRules, weightFieldValidationRules} from './validationRules';
-import {useCreateProgressEntryMutation} from '../../../services';
+import {useCreateProgressEntryMutation, useEditProgressEntryMutation, useFetchProgressEntryQuery} from '../../../services';
 import truncateStringWithDots from '../../../helpers/truncateStringWithDots';
 import convertFileToBase64 from '../../../helpers/convertFileToBase64';
+import getErrorMessage from './getErrorMessage';
 
 import styles from './styles.module.scss';
 
@@ -32,13 +33,27 @@ type ProgressItemFormValues = {
 const MAX_IMAGE_NAME_STRING_LENGTH = 30;
 
 const CreateProgressItemPage = () => {
-    const [createNewProgressEntry, {isLoading, isError}] = useCreateProgressEntryMutation();
     const navigate = useNavigate();
+    const {id} = useParams();
+
+    const [createNewProgressEntry, {isLoading: isCreating, isError: isCreateError}] = useCreateProgressEntryMutation();
+    const [editProgressEntry, {isLoading: isEditing, isError: isEditError}] = useEditProgressEntryMutation();
+    const {
+        data,
+        isLoading: isLoadingProgressEntry,
+        isError: isFetchError
+    } = useFetchProgressEntryQuery(id, {
+        skip: !id
+    });
 
     const methods = useForm<ProgressItemFormValues>({
         defaultValues: {
-            weight: 0,
-            progressIndicators: ''
+            weight: data?.weight || 0,
+            progressIndicators: data?.progressIndicators || '',
+            // todo: convert image from base64 to File https://ionic.io/blog/converting-a-base64-string-to-a-blob-in-javascript
+            // @ts-ignore
+            image: data?.image || null,
+            date: data?.date || null
         }
     });
 
@@ -50,7 +65,9 @@ const CreateProgressItemPage = () => {
 
         const base64img = await convertFileToBase64(picture);
 
-        const result = await createNewProgressEntry({
+        const trigger = id ? editProgressEntry : createNewProgressEntry;
+
+        const result = await trigger({
             weight: Number(fields.weight),
             progressIndicators: fields.progressIndicators,
             image: base64img as string,
@@ -66,9 +83,13 @@ const CreateProgressItemPage = () => {
         }
     };
 
+    const isError = isCreateError || isEditError || isFetchError;
+    const errorMessage = getErrorMessage(isCreateError, isEditError, isFetchError);
+    const isLoading = isCreating || isEditing || isLoadingProgressEntry;
+
     return (
         <PageWithResponsiveAppBar>
-            {isError && <Alert severity="error">New progress item upload failed. Please try again.</Alert>}
+            {isError && <Alert severity="error">{errorMessage}</Alert>}
             <div className={styles.formWrapper}>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
@@ -131,25 +152,30 @@ const CreateProgressItemPage = () => {
                         <Controller
                             name="image"
                             rules={imageFieldValidationRules}
-                            render={({field, fieldState: {error}}) => (
-                                <React.Fragment>
-                                    <label className={classNames(styles.field, styles.customFileUpload, Boolean(error) && styles.inputWithError)}>
-                                        <CloudUploadIcon />
-                                        <span className={styles.imageUploadInputText}>Upload photo</span>
-                                        <input
-                                            {...field}
-                                            className={styles.imageUploadInput}
-                                            type="file"
-                                            accept="image/jpeg, image/png, image/jpg, image/heic"
-                                            id="progress-page-upload-image-input"
-                                        />
-                                    </label>
-                                    <span>{truncateStringWithDots(field.value?.split('\\').pop() || '', MAX_IMAGE_NAME_STRING_LENGTH)}</span>
-                                    <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
-                                        {error ? error.message : ''}
-                                    </FormHelperText>
-                                </React.Fragment>
-                            )}
+                            render={({field, fieldState: {error}}) => {
+                                const imagePath = field.value?.split('\\');
+                                const imageName = truncateStringWithDots(imagePath ? imagePath[imagePath.length - 1] : '', MAX_IMAGE_NAME_STRING_LENGTH);
+
+                                return (
+                                    <React.Fragment>
+                                        <label className={classNames(styles.field, styles.customFileUpload, Boolean(error) && styles.inputWithError)}>
+                                            <CloudUploadIcon />
+                                            <span className={styles.imageUploadInputText}>Upload photo</span>
+                                            <input
+                                                {...field}
+                                                className={styles.imageUploadInput}
+                                                type="file"
+                                                accept="image/jpeg, image/png, image/jpg, image/heic"
+                                                id="progress-page-upload-image-input"
+                                            />
+                                        </label>
+                                        <span>{imageName}</span>
+                                        <FormHelperText id="outlined-weight-helper-text" className={styles.errorMessage}>
+                                            {error ? error.message : ''}
+                                        </FormHelperText>
+                                    </React.Fragment>
+                                );
+                            }}
                         />
                         {/* Submit */}
                         <Button variant="contained" type="submit" className={styles.submitButton} disabled={isLoading}>

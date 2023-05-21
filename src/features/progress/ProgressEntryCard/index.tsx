@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import moment from 'moment';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -22,10 +24,10 @@ const ProgressEntryCard: React.FC<IProgressEntryCard> = ({image, date, weight, p
     const [deleteProgressEntry, {isError, isLoading}] = useDeleteProgressEntryMutation();
     const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
     const [isConfirmOpen, setConfirmOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const onEditProgressEntryClick = () => {
-        // todo
-        window.alert('To be continued...');
+        navigate(`/progress/${id}`);
     };
 
     const closeSnackBar = () => {
@@ -74,15 +76,13 @@ const ProgressEntryCard: React.FC<IProgressEntryCard> = ({image, date, weight, p
                 </div>
                 <CardContent>
                     <Typography color="text.secondary" gutterBottom className={styles.date}>
-                        {/* todo: transform date to sth readable */}
-                        {date}
+                        {moment(date).format('L')}
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary">
                         Weight: {weight}
                     </Typography>
                     <Typography variant="body2">{progressIndicators}</Typography>
                     <Stack direction="row" spacing={2} className={styles.buttonWrapper}>
-                        {/* todo: handle edit */}
                         <Button variant="contained" endIcon={<EditIcon />} onClick={onEditProgressEntryClick} disabled={isLoading}>
                             Edit
                         </Button>

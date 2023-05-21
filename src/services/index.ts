@@ -22,6 +22,8 @@ interface IDeleteProgressEntryResponse extends IApiResponse {}
 
 interface ICreateProgressEntryResponse extends IApiResponse {}
 
+interface IEditProgressEntryResponse extends IApiResponse {}
+
 enum API_ROUTES {
     LOGIN = 'login',
     REGISTER = 'register',
@@ -32,7 +34,8 @@ enum API_ROUTES {
 enum HTTP_METHODS {
     POST = 'POST',
     GET = 'GET',
-    DELETE = 'DELETE'
+    DELETE = 'DELETE',
+    PUT = 'PUT'
 }
 
 enum Tags {
@@ -69,6 +72,13 @@ export const gymWorkoutTrackerApi = createApi({
             providesTags: [Tags.PROGRESS_ITEMS]
         }),
 
+        fetchProgressEntry: builder.query<IProgressItem, string>({
+            query: id => ({
+                url: `${API_ROUTES.PROGRESS_ENTRY}/${id}`,
+                method: HTTP_METHODS.GET
+            })
+        }),
+
         deleteProgressEntry: builder.mutation<IDeleteProgressEntryResponse, string>({
             query: id => ({
                 url: `${API_ROUTES.PROGRESS_ENTRY}/${id}`,
@@ -84,9 +94,25 @@ export const gymWorkoutTrackerApi = createApi({
                 body
             }),
             invalidatesTags: [Tags.PROGRESS_ITEMS]
+        }),
+
+        editProgressEntry: builder.mutation<IEditProgressEntryResponse, IProgressItem>({
+            query: body => ({
+                url: `${API_ROUTES.PROGRESS_ENTRY}/${body.id}`,
+                method: HTTP_METHODS.PUT,
+                body
+            }),
+            invalidatesTags: [Tags.PROGRESS_ITEMS]
         })
     })
 });
 
-export const {useCreateProgressEntryMutation, useLoginMutation, useRegisterMutation, useFetchProgressEntriesQuery, useDeleteProgressEntryMutation} =
-    gymWorkoutTrackerApi;
+export const {
+    useFetchProgressEntryQuery,
+    useEditProgressEntryMutation,
+    useCreateProgressEntryMutation,
+    useLoginMutation,
+    useRegisterMutation,
+    useFetchProgressEntriesQuery,
+    useDeleteProgressEntryMutation
+} = gymWorkoutTrackerApi;
