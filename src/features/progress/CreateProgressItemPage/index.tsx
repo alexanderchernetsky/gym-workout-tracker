@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import uuid from 'react-uuid';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -48,16 +48,28 @@ const CreateProgressItemPage = () => {
 
     const methods = useForm<ProgressItemFormValues>({
         defaultValues: {
-            weight: data?.weight || 0,
-            progressIndicators: data?.progressIndicators || '',
-            // todo: convert image from base64 to File https://ionic.io/blog/converting-a-base64-string-to-a-blob-in-javascript
-            // @ts-ignore
-            image: data?.image || null,
-            date: data?.date || null
+            weight: 0,
+            progressIndicators: '',
+            image: undefined,
+            date: undefined
         }
     });
 
-    const {handleSubmit} = methods;
+    const {handleSubmit, reset} = methods;
+
+    useEffect(() => {
+        // set default form values in edit mode
+        if (data) {
+            reset({
+                weight: data.weight,
+                progressIndicators: data.progressIndicators
+                // todo: set date in edit mode
+                // date: moment(data.date),
+                // todo: convert image from base64 to File https://ionic.io/blog/converting-a-base64-string-to-a-blob-in-javascript
+                // image: data.image,
+            });
+        }
+    }, [data]);
 
     const onSubmit: SubmitHandler<ProgressItemFormValues> = async fields => {
         const input = document.getElementById('progress-page-upload-image-input') as HTMLInputElement;

@@ -76,7 +76,8 @@ export const gymWorkoutTrackerApi = createApi({
             query: id => ({
                 url: `${API_ROUTES.PROGRESS_ENTRY}/${id}`,
                 method: HTTP_METHODS.GET
-            })
+            }),
+            transformResponse: (response: {data: IProgressItem}) => response.data
         }),
 
         deleteProgressEntry: builder.mutation<IDeleteProgressEntryResponse, string>({
