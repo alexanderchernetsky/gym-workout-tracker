@@ -51,28 +51,30 @@ const Home = () => {
     return (
         <PageWithResponsiveAppBar>
             <div className={styles.homePageWrapper}>
-                <h1 className={styles.pageTitle}>Start Workout</h1>
-                <h3 className={styles.pageSecondaryTitle}>Quick start</h3>
-                <Button variant="contained" className={styles.button} onClick={onStartEmptyWorkoutClick}>
-                    Start an Empty Workout
-                </Button>
-                <div className={styles.templates}>
-                    <h2>Templates</h2>
-                    <Button variant="outlined" className={styles.newTemplateButton} onClick={onAddTemplateClick}>
-                        + template
+                <div className={styles.contentWrapper}>
+                    <h1 className={styles.pageTitle}>Start Workout</h1>
+                    <h3 className={styles.pageSecondaryTitle}>Quick start</h3>
+                    <Button variant="contained" className={styles.button} onClick={onStartEmptyWorkoutClick}>
+                        Start an Empty Workout
                     </Button>
-                </div>
-                <h3 className={styles.pageSecondaryTitle}>My templates ({myTemplatesNumber})</h3>
-                <div className={styles.myTemplatesWrapper}>
-                    {mockTemplates.map(item => {
-                        return <TemplateCard key={item.id} {...item} />;
-                    })}
-                </div>
-                <h3 className={styles.pageSecondaryTitle}>Example templates ({exampleTemplatesNumber})</h3>
-                <div className={styles.myTemplatesWrapper}>
-                    {mockTemplates.map(item => {
-                        return <TemplateCard key={item.id} {...item} />;
-                    })}
+                    <div className={styles.templates}>
+                        <h2>Templates</h2>
+                        <Button variant="outlined" className={styles.newTemplateButton} onClick={onAddTemplateClick}>
+                            + template
+                        </Button>
+                    </div>
+                    <h3 className={styles.pageSecondaryTitle}>My templates ({myTemplatesNumber})</h3>
+                    <div className={styles.myTemplatesWrapper}>
+                        {mockTemplates.map(item => {
+                            return <TemplateCard key={item.id} {...item} />;
+                        })}
+                    </div>
+                    <h3 className={styles.pageSecondaryTitle}>Example templates ({exampleTemplatesNumber})</h3>
+                    <div className={styles.myTemplatesWrapper}>
+                        {mockTemplates.map(item => {
+                            return <TemplateCard key={item.id} {...item} />;
+                        })}
+                    </div>
                 </div>
             </div>
         </PageWithResponsiveAppBar>

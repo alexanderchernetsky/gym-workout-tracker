@@ -8,6 +8,5 @@ export enum AppRoutes {
     NEW_WORKOUT_PAGE = '/new-workout',
     HISTORY_PAGE = '/history',
     EXERCISES_LIST = `/exercises`,
-    DASHBOARD_PAGE = '/dashboard',
     NOT_FOUND = '/not-found'
 }

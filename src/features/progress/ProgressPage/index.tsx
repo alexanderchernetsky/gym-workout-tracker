@@ -28,8 +28,9 @@ const ProgressPage = () => {
             <div className={styles.pageWrapper}>
                 <Loading isLoading={isLoading}>
                     <Error isError={isError}>
-                        <Fab color="primary" aria-label="add" className={styles.addIcon}>
+                        <Fab color="primary" aria-label="add" className={styles.addButton}>
                             <AddIcon onClick={onAddIconClick} />
+                            {/* todo: add this text on desktop 'Add new progress item' and variant="extended" to Fab */}
                         </Fab>
                         {sortedProgressItems.map(item => {
                             return <ProgressEntryCard key={item.id} {...item} />;

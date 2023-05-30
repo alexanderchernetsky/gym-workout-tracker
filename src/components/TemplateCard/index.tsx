@@ -22,7 +22,7 @@ const TemplateCard: React.FC<IWorkoutTemplate> = ({name, exercises}) => {
             <CardContent className={styles.cardContent}>
                 <div className={styles.templateHeader}>
                     <h4 className={styles.templateName}>{name}</h4>
-                    <MoreHorizIcon color="info" onClick={onTemplateInfoClick} />
+                    <MoreHorizIcon color="info" onClick={onTemplateInfoClick} className={styles.moreInfoIcon} />
                 </div>
                 <div className={styles.exercisesList}>{truncateStringWithDots(exercisesList, MAX_EXERCISES_STRING_LENGTH)}</div>
             </CardContent>

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
-import uuid from 'react-uuid';
 import {useNavigate, useParams} from 'react-router-dom';
 import classNames from 'classnames';
 import {Moment} from 'moment';
@@ -83,9 +82,8 @@ const CreateProgressItemPage = () => {
             weight: Number(fields.weight),
             progressIndicators: fields.progressIndicators,
             image: base64img as string,
-            // todo: id should be created server-side and returned with the response
-            id: uuid().slice(0, 8),
-            date: fields.date.format() // "2014-09-08T08:02:17-05:00" (ISO 8601, no fractional seconds)
+            date: fields.date.format(), // "2014-09-08T08:02:17-05:00" (ISO 8601, no fractional seconds),
+            id: id
         }).unwrap();
 
         if (result.success) {

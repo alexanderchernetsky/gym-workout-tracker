@@ -76,7 +76,7 @@ function ResponsiveAppBar() {
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
-                <Toolbar disableGutters>
+                <Toolbar disableGutters className={styles.toolbar}>
                     {/* Desktop */}
                     <FitnessCenterIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
                     <Typography

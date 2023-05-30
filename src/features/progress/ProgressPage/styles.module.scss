@@ -1,11 +1,11 @@
 .pageWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 
-.addIcon {
+.addButton {
     position: fixed !important;
     bottom: 50px;
     right: 50px;
