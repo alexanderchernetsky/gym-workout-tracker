@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import Fab from '@mui/material/Fab';
+import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 import {PageWithResponsiveAppBar} from '../../../components/ResponsiveAppBar';
@@ -23,21 +23,30 @@ const ProgressPage = () => {
 
     const sortedProgressItems = useMemo(() => sortProgressItemsByDate(data), [data]);
 
+    const myProgressEntriesNumber = sortedProgressItems.length;
+
     return (
         <PageWithResponsiveAppBar>
-            <div className={styles.pageWrapper}>
-                <Loading isLoading={isLoading}>
-                    <Error isError={isError}>
-                        <Fab color="primary" aria-label="add" className={styles.addButton}>
-                            <AddIcon onClick={onAddIconClick} />
-                            {/* todo: add this text on desktop 'Add new progress item' and variant="extended" to Fab */}
-                        </Fab>
-                        {sortedProgressItems.map(item => {
-                            return <ProgressEntryCard key={item.id} {...item} />;
-                        })}
-                    </Error>
-                </Loading>
-            </div>
+            <Loading isLoading={isLoading}>
+                <Error isError={isError}>
+                    <div className={styles.pageWrapper}>
+                        <div className={styles.contentWrapper}>
+                            <h1 className={styles.pageTitle}>Progress</h1>
+                            <Button variant="contained" className={styles.addButton} onClick={onAddIconClick}>
+                                <AddIcon onClick={onAddIconClick} />
+                                &nbsp; Add new progress entry
+                            </Button>
+                            <h2>Entries</h2>
+                            <h3 className={styles.pageSecondaryTitle}>My progress entries ({myProgressEntriesNumber})</h3>
+                            <div className={styles.progressItemsWrapper}>
+                                {sortedProgressItems.map(item => {
+                                    return <ProgressEntryCard key={item.id} {...item} />;
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </Error>
+            </Loading>
         </PageWithResponsiveAppBar>
     );
 };

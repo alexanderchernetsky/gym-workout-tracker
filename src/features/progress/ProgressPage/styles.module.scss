@@ -1,12 +1,40 @@
 .pageWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
+    background-color: white;
+    min-height: 100vh;
+    padding: 0 15px 25px 15px;
+}
+
+.contentWrapper {
+    width: 100%;
+    max-width: 1024px;
 }
 
 .addButton {
-    position: fixed !important;
-    bottom: 50px;
-    right: 50px;
+    width: 100%;
+}
+
+.pageTitle {
+    font-size: 28px;
+    margin-right: auto;
+}
+
+.pageSecondaryTitle {
+    margin: 10px auto 10px 0;
+}
+
+.progressItemsWrapper {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 100%;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
 }
