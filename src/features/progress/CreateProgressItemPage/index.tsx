@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Controller, SubmitHandler, useForm, FormProvider} from 'react-hook-form';
 import {useNavigate, useParams} from 'react-router-dom';
 import classNames from 'classnames';
-import {Moment} from 'moment';
+// todo: get rid of deprecated moment.js in the project, use day.js
+import dayjs, {Dayjs} from 'dayjs';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -19,13 +20,14 @@ import {useCreateProgressEntryMutation, useEditProgressEntryMutation, useFetchPr
 import truncateStringWithDots from '../../../helpers/truncateStringWithDots';
 import convertFileToBase64 from '../../../helpers/convertFileToBase64';
 import getErrorMessage from './getErrorMessage';
+import convertBase64toFile from '../../../helpers/convertBase64toFile';
 
 import styles from './styles.module.scss';
 
 type ProgressItemFormValues = {
     weight: number;
     progressIndicators: string;
-    date: Moment;
+    date: Dayjs;
     image: File;
 };
 
@@ -35,6 +37,7 @@ const CreateProgressItemPage = () => {
     const navigate = useNavigate();
     const {id} = useParams();
 
+    const [file, setFile] = useState<Blob>(); // we need this only during edit mode
     const [createNewProgressEntry, {isLoading: isCreating, isError: isCreateError}] = useCreateProgressEntryMutation();
     const [editProgressEntry, {isLoading: isEditing, isError: isEditError}] = useEditProgressEntryMutation();
     const {
@@ -49,8 +52,8 @@ const CreateProgressItemPage = () => {
         defaultValues: {
             weight: 0,
             progressIndicators: '',
-            image: undefined,
-            date: undefined
+            date: id ? dayjs(data?.date) : undefined
+            // we can't programmatically set value of a file type input
         }
     });
 
@@ -59,17 +62,20 @@ const CreateProgressItemPage = () => {
     useEffect(() => {
         // set default form values in edit mode
         if (data) {
-            reset({
-                weight: data.weight,
-                progressIndicators: data.progressIndicators
-                // todo: set date in edit mode
-                // date: moment(data.date),
-                // todo: convert image from base64 to File https://ionic.io/blog/converting-a-base64-string-to-a-blob-in-javascript
-                // image: data.image,
+            convertBase64toFile(data.image).then(file => {
+                setFile(file);
+
+                reset({
+                    weight: data.weight,
+                    progressIndicators: data.progressIndicators,
+                    date: dayjs(data.date)
+                    // we can't programmatically set value of a file type input
+                });
             });
         }
     }, [data]);
 
+    // todo: in Edit mode image can't be set to field.value, threfore, when u submit in edit mode, validation is not passing
     const onSubmit: SubmitHandler<ProgressItemFormValues> = async fields => {
         const input = document.getElementById('progress-page-upload-image-input') as HTMLInputElement;
         const picture = input.files[0];
@@ -163,14 +169,20 @@ const CreateProgressItemPage = () => {
                             name="image"
                             rules={imageFieldValidationRules}
                             render={({field, fieldState: {error}}) => {
-                                const imagePath = field.value?.split('\\');
-                                const imageName = truncateStringWithDots(imagePath ? imagePath[imagePath.length - 1] : '', MAX_IMAGE_NAME_STRING_LENGTH);
+                                let imageName: string = '';
+
+                                if (field.value) {
+                                    const imagePath = field.value?.split('\\');
+                                    imageName = truncateStringWithDots(imagePath ? imagePath[imagePath.length - 1] : '', MAX_IMAGE_NAME_STRING_LENGTH);
+                                } else if (file) {
+                                    imageName = file?.name;
+                                }
 
                                 return (
                                     <React.Fragment>
                                         <label className={classNames(styles.field, styles.customFileUpload, Boolean(error) && styles.inputWithError)}>
                                             <CloudUploadIcon />
-                                            <span className={styles.imageUploadInputText}>Upload photo</span>
+                                            <span className={styles.imageUploadInputText}>{id ? 'Upload new photo' : 'Upload photo'}</span>
                                             <input
                                                 {...field}
                                                 className={styles.imageUploadInput}

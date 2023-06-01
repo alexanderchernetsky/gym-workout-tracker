@@ -27,9 +27,9 @@ const ProgressPage = () => {
 
     return (
         <PageWithResponsiveAppBar>
-            <Loading isLoading={isLoading}>
-                <Error isError={isError}>
-                    <div className={styles.pageWrapper}>
+            <div className={styles.pageWrapper}>
+                <Loading isLoading={isLoading}>
+                    <Error isError={isError}>
                         <div className={styles.contentWrapper}>
                             <h1 className={styles.pageTitle}>Progress</h1>
                             <Button variant="contained" className={styles.addButton} onClick={onAddIconClick}>
@@ -44,9 +44,9 @@ const ProgressPage = () => {
                                 })}
                             </div>
                         </div>
-                    </div>
-                </Error>
-            </Loading>
+                    </Error>
+                </Loading>
+            </div>
         </PageWithResponsiveAppBar>
     );
 };
