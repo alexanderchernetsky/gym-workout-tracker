@@ -35,9 +35,17 @@ export const dateFieldValidationRules = {
     }
 };
 
-export const imageFieldValidationRules = {
-    required: {
-        value: true,
-        message: 'Image is required'
+export const validateImageField = (value: any, id: string): boolean | string => {
+    // we have to use custom validation
+    if (id) {
+        // we always have a picture in edit mode, at least old one
+        return true;
+    } else {
+        // create mode
+        if (value) {
+            return true;
+        } else {
+            return 'Image is required';
+        }
     }
 };

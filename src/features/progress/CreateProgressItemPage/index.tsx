@@ -15,7 +15,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import {PageWithResponsiveAppBar} from '../../../components/ResponsiveAppBar';
 import {AppRoutes} from '../../../constants/routes';
-import {dateFieldValidationRules, imageFieldValidationRules, progressIndicatorsFieldValidationRules, weightFieldValidationRules} from './validationRules';
+import {dateFieldValidationRules, progressIndicatorsFieldValidationRules, validateImageField, weightFieldValidationRules} from './validationRules';
 import {useCreateProgressEntryMutation, useEditProgressEntryMutation, useFetchProgressEntryQuery} from '../../../services';
 import truncateStringWithDots from '../../../helpers/truncateStringWithDots';
 import convertFileToBase64 from '../../../helpers/convertFileToBase64';
@@ -75,12 +75,16 @@ const CreateProgressItemPage = () => {
         }
     }, [data]);
 
-    // todo: in Edit mode image can't be set to field.value, threfore, when u submit in edit mode, validation is not passing
     const onSubmit: SubmitHandler<ProgressItemFormValues> = async fields => {
         const input = document.getElementById('progress-page-upload-image-input') as HTMLInputElement;
         const picture = input.files[0];
 
-        const base64img = await convertFileToBase64(picture);
+        let base64img;
+        if (picture) {
+            base64img = await convertFileToBase64(picture);
+        } else {
+            base64img = data.image; // edit mode, when new picture is not uploaded
+        }
 
         const trigger = id ? editProgressEntry : createNewProgressEntry;
 
@@ -167,7 +171,7 @@ const CreateProgressItemPage = () => {
                         <span className={styles.fieldLabel}>Image:</span>
                         <Controller
                             name="image"
-                            rules={imageFieldValidationRules}
+                            rules={{validate: value => validateImageField(value, id)}}
                             render={({field, fieldState: {error}}) => {
                                 let imageName: string = '';
 
