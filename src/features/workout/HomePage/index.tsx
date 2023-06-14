@@ -70,7 +70,7 @@ const Home = () => {
                         })}
                     </div>
                     <h3 className={styles.pageSecondaryTitle}>Example templates ({exampleTemplatesNumber})</h3>
-                    <div className={styles.myTemplatesWrapper}>
+                    <div className={styles.myTemplatesWrapper} data-testid="home-page-example-templates">
                         {mockTemplates.map(item => {
                             return <TemplateCard key={item.id} {...item} />;
                         })}

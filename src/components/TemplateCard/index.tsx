@@ -18,7 +18,7 @@ const TemplateCard: React.FC<IWorkoutTemplate> = ({name, exercises}) => {
     const exercisesList = exercises.map(exercise => exercise.name.charAt(0).toUpperCase() + exercise.name.slice(1)).join(', ');
 
     return (
-        <Card className={styles.card}>
+        <Card className={styles.card} data-testid="workout-template-card">
             <CardContent className={styles.cardContent}>
                 <div className={styles.templateHeader}>
                     <h4 className={styles.templateName}>{name}</h4>

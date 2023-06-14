@@ -64,7 +64,7 @@ const ProgressEntryCard: React.FC<IProgressEntryCard> = ({image, date, weight, p
                     handleClose={handleClose}
                 />
             ) : null}
-            <Card className={styles.progressItemCard}>
+            <Card className={styles.progressItemCard} data-testid="progress-entry-card">
                 {/*todo: create a re-usable SnackBar component (also used on Register page) */}
                 <Snackbar open={isSnackBarOpen} onClose={closeSnackBar} autoHideDuration={3000} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                     <Alert severity="error" sx={{width: '100%'}}>
