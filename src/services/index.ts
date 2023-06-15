@@ -3,6 +3,7 @@ import {LoginInputs} from '../features/auth/LoginPage';
 import {IUserInfo} from '../features/auth/authSlice';
 import {RegisterFormInputs} from '../features/auth/RegisterPage';
 import {IProgressItem} from '../features/progress/progressSlice';
+import {HTTP_METHODS} from './httpMethods';
 
 const gymWorkoutTrackerApiUrl = process.env.REACT_APP_API;
 // 'http://localhost:3001'
@@ -29,13 +30,6 @@ enum API_ROUTES {
     REGISTER = 'register',
     PROGRESS_ENTRIES = 'progress-entries',
     PROGRESS_ENTRY = 'progress-entry'
-}
-
-enum HTTP_METHODS {
-    POST = 'POST',
-    GET = 'GET',
-    DELETE = 'DELETE',
-    PUT = 'PUT'
 }
 
 enum Tags {
