@@ -1,0 +1,54 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    min-height: 100vh;
+    padding: 0 15px 25px 15px;
+}
+
+.contentWrapper {
+    width: 100%;
+    max-width: 1024px;
+}
+
+.searchInput {
+    width: 100%;
+}
+
+.filtersWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    column-gap: 20px;
+}
+
+.selectWrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.selectOption {
+    text-transform: capitalize;
+}
+
+.exerciseName {
+    span {
+        font-weight: bold !important;
+    }
+    text-transform: capitalize;
+    list-style: none;
+    color: #1a2027;
+}
+
+.list {
+    width: 100%;
+}
+
+.subHeader {
+    font-weight: normal;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
+}
