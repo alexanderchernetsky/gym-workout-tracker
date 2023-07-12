@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {Chip, List, ListItem, ListItemText} from '@mui/material';
+import {List} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +12,7 @@ import Error from '../../../components/Error';
 import Loading from '../../../components/Loading';
 import createSearchString from '../../../helpers/createSearchString';
 import {muscleSelectOptions, typeSelectOptions} from './filterOptions';
+import ExerciseListItem from '../ExerciseListItem';
 
 import styles from './styles.module.scss';
 
@@ -83,10 +84,7 @@ const Exercises = () => {
                             <h2 className={styles.subHeader}>Exercises:</h2>
                             <List sx={{bgcolor: 'background.paper'}} component="nav" aria-label="exercises" className={styles.list}>
                                 {data.map((exercise, index) => (
-                                    <ListItem key={`${exercise.name}-${index}`} button divider>
-                                        <ListItemText primary={exercise.name} className={styles.exerciseName} />
-                                        <Chip label={exercise.muscle} variant="outlined" />
-                                    </ListItem>
+                                    <ExerciseListItem exercise={exercise} key={`${exercise.name}-${index}`} />
                                 ))}
                                 {data.length === 0 && 'Nothing found...'}
                             </List>
