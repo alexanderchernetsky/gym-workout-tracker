@@ -22,16 +22,18 @@ const Exercises = () => {
 
     const searchString = createSearchString({muscle: muscle, type: type, name: name});
 
+    // todo: how to apply throttle-debounce library? Is it needed or should it be removed from deps? should I use skip?
     const {data = [], isLoading, isError} = useFetchExercisesQuery(searchString);
 
     const handleTypeChange = (event: SelectChangeEvent) => {
         setType(event.target.value);
     };
+
     const handleMuscleChange = (event: SelectChangeEvent) => {
         setMuscle(event.target.value);
     };
+
     const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // todo: use RTK query throttling? / throttle-debounce library
         setName(event.target.value);
     };
 
@@ -80,15 +82,13 @@ const Exercises = () => {
                             </div>
                             <h2 className={styles.subHeader}>Exercises:</h2>
                             <List sx={{bgcolor: 'background.paper'}} component="nav" aria-label="exercises" className={styles.list}>
-                                {/*todo: remove ts-ignore*/}
-                                {/*@ts-ignore*/}
                                 {data.map((exercise, index) => (
                                     <ListItem key={`${exercise.name}-${index}`} button divider>
                                         <ListItemText primary={exercise.name} className={styles.exerciseName} />
                                         <Chip label={exercise.muscle} variant="outlined" />
                                     </ListItem>
                                 ))}
-                                {/* todo: show sth if nothing found */}
+                                {data.length === 0 && 'Nothing found...'}
                             </List>
                         </div>
                     </Error>
