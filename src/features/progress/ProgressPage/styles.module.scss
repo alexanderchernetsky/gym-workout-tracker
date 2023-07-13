@@ -1,9 +1,11 @@
+@import 'src/css/variables/colors';
+
 .pageWrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: white;
+    background-color: $--color-background-page-wrapper;
     min-height: 100vh;
     padding: 0 15px 25px 15px;
 }

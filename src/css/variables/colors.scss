@@ -1,0 +1,18 @@
+// definitive naming convention
+$gray: gray;
+$blue: #1976d2;
+$black: #1a2027;
+$black-2: rgba(0, 0, 0, 0.6);
+$black-3: rgba(0, 0, 0, 0.23);
+$white: white;
+$red: #d32f2f;
+
+// contextual naming
+$--color-text-exercises: $gray;
+$--color-text-signup-link: $blue;
+$--color-text-exercise-name: $black;
+$--color-background-page-wrapper: $white;
+$---color-text-subheader: $black-2;
+$---color-text-error: $red;
+$---color-border-error: $red;
+$--color-border-upload: $black-3;

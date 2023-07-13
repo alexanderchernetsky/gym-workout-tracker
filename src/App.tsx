@@ -21,7 +21,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 interface IRequireAuthProps {
     children: React.ReactNode;
