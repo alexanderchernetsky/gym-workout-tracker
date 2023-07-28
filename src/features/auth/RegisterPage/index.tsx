@@ -12,6 +12,7 @@ import {RootState} from '../../../store';
 import {emailFieldValidationRules, passwordFieldValidationRules, userNameValidationRules} from '../validationRules';
 import {AppRoutes} from '../../../constants/routes';
 import {useRegisterMutation} from '../../../services';
+import getErrorMessage from '../../../helpers/getErrorMessageFromApiResponse';
 
 import styles from '../styles.module.scss';
 
@@ -25,7 +26,7 @@ const RegisterPage = () => {
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.auth.user);
     const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
-    const [registerUser, {isError, isLoading}] = useRegisterMutation();
+    const [registerUser, {isError, error, isLoading}] = useRegisterMutation();
 
     const methods = useForm<RegisterFormInputs>({
         defaultValues: {
@@ -62,6 +63,8 @@ const RegisterPage = () => {
         navigate(AppRoutes.LOGIN);
     };
 
+    const errorMessageFromApi = getErrorMessage(error);
+
     return (
         <React.Fragment>
             <Snackbar open={isSnackBarOpen} autoHideDuration={5000} anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
@@ -73,7 +76,7 @@ const RegisterPage = () => {
                 Registration
             </Typography>
             <div className={styles.formWrapper}>
-                {isError && <Alert severity="error">The error has happened. Please try to register again.</Alert>}
+                {isError && <Alert severity="error">Error: {errorMessageFromApi}</Alert>}
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
                         <Controller

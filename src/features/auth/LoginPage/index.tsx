@@ -12,6 +12,7 @@ import {AppDispatch} from '../../../store';
 import {AppRoutes} from '../../../constants/routes';
 import {emailFieldValidationRules, passwordFieldValidationRules} from '../validationRules';
 import {SHARED_LOGIN_KEY, useLoginMutation} from '../../../services';
+import getErrorMessage from '../../../helpers/getErrorMessageFromApiResponse';
 
 import styles from '../styles.module.scss';
 
@@ -28,7 +29,7 @@ const loginFormDefaultValues: LoginInputs = {
 const LoginPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const [loginUser, {data, isError, isLoading}] = useLoginMutation({
+    const [loginUser, {data, error, isError, isLoading}] = useLoginMutation({
         fixedCacheKey: SHARED_LOGIN_KEY
     });
 
@@ -58,13 +59,15 @@ const LoginPage = () => {
         navigate(AppRoutes.REGISTER);
     };
 
+    const errorMessageFromApi = getErrorMessage(error);
+
     return (
         <React.Fragment>
             <Typography variant="h4" component="h3" className={styles.heading}>
                 GYM
             </Typography>
             <div className={styles.formWrapper}>
-                {isError && <Alert severity="error">The error has happened. Please try to log in again.</Alert>}
+                {isError && <Alert severity="error">Error: {errorMessageFromApi}</Alert>}
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <FormProvider {...methods}>
                         <Controller
