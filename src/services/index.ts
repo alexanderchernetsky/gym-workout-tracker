@@ -9,7 +9,7 @@ const gymWorkoutTrackerApiUrl = process.env.REACT_APP_API;
 // 'http://localhost:3001'
 // process.env.REACT_APP_API
 
-type LoginResponse = {success: boolean; user: IUserInfo};
+type LoginResponse = {success: boolean; user: IUserInfo; token: string};
 
 export const SHARED_LOGIN_KEY = 'shared-login';
 
@@ -38,7 +38,20 @@ enum Tags {
 
 export const gymWorkoutTrackerApi = createApi({
     reducerPath: 'gymWorkoutTrackerApi',
-    baseQuery: fetchBaseQuery({baseUrl: gymWorkoutTrackerApiUrl}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: gymWorkoutTrackerApiUrl,
+        prepareHeaders: (headers, api) => {
+            const jwt = localStorage.getItem('token');
+            const endpointsWithoutAuthorization = ['login', 'register'];
+
+            if (jwt && !endpointsWithoutAuthorization.includes(api.endpoint)) {
+                headers.set('authorization', `Bearer ${jwt}`);
+
+                return headers;
+            }
+        },
+        credentials: 'include'
+    }),
     tagTypes: [Tags.PROGRESS_ITEMS],
     endpoints: builder => ({
         login: builder.mutation<LoginResponse, LoginInputs>({

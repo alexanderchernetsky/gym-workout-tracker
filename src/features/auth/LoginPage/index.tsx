@@ -45,6 +45,7 @@ const LoginPage = () => {
     const onSubmit: SubmitHandler<LoginInputs> = async fields => {
         if (isValid) {
             const data = await loginUser(fields).unwrap();
+            localStorage.setItem('token', data.token);
             dispatch(login(data.user));
         }
     };

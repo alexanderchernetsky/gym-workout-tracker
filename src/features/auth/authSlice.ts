@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 export interface IUserInfo {
     id: string;
     name: string;
+    email: string;
 }
 
 interface IAuthState {
@@ -31,6 +32,7 @@ const authSlice = createSlice({
 
         logOut: state => {
             localStorage.removeItem('user');
+            localStorage.removeItem('token');
 
             return {
                 isLoggedIn: false,

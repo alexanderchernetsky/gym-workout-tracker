@@ -25,6 +25,8 @@ const ProgressPage = () => {
 
     const myProgressEntriesNumber = sortedProgressItems.length;
 
+    // todo: add a text/placeholder when there are no progress items yet
+
     return (
         <PageWithResponsiveAppBar>
             <div className={styles.pageWrapper}>
